@@ -1,0 +1,22 @@
+package proto.openfunction;
+
+
+//开启功能列表
+message OpenFuncitonResponse
+{
+	repeated FunctionVo functionVo=1; //开启功能列表
+}
+
+
+message FunctionVo
+{
+	optional int32  functionId=1; //功能Id
+	optional bool   isOpen=2; //true：开启
+}
+ 
+
+
+
+
+ 
+

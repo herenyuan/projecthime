@@ -1,0 +1,184 @@
+package proto.game;
+
+ 
+//=========================== 战斗部分 =======================
+
+enum SyncType {
+	Attack=1;//攻击
+	AttackResult=2;//攻击伤害信息返回
+	HpChange=3;//血量变更
+	BuffChange=4; //buff变更
+	HeroChange=5;// 英雄上阵下阵信息  PutInHeroChange
+	RemoveHeroCard=6;  // 移除英雄 备选上阵卡牌
+	
+	HeartBeat=7; //心跳
+}
+
+
+//Sync 请求消息 攻击
+message StateSyncRequest{
+	required SyncType syncType=1;
+	optional AttackRequest attackRequest=3;
+}
+
+
+message StateSync{
+	required SyncType syncType=1;
+	optional AttackResponse attackResponse=2;   //攻击返回  命中血量变更返回
+	repeated BuffResponse buffResponse=3;   //buff 信息
+	optional PutInHeroChange heroChange=4;    //上阵英雄以及英雄死亡消失
+	optional RemoveHeroCardResponse removeCard=5; //移除英雄 备选上阵卡牌
+}
+
+message RemoveHeroCardResponse {
+	optional int32 ownerIndex=1; // 主角index
+	optional int32 heroId=2; //英雄卡牌Id
+}
+
+message AttackRequest {
+	required int32 skillId=1; //施放的技能id
+	optional int32 latticeNum=2; //攻击目标格子  己方0-8  敌方10-18  
+}
+
+message AttackResponse {
+	required int32 attacker=1;//攻击者的index
+	optional int32 skillId=2; //施放的技能id
+	repeated Target targets=3;//所有被打到的目标列表
+}
+
+
+message BuffResponse
+{
+	optional int32 index=1;
+	optional int32 buffId=2;//配置文件id
+	optional int32 remianTime=3;//剩余时间（毫秒）
+	optional bool isAdd=4;//true为获得buff，false为移除buff
+}
+
+message DungeonInfoResponse
+{
+	repeated BattleHeroInfo battleHeros=1; //场上英雄的信息  （断线重连 或者新开战斗请求返回信息）
+	repeated GameHeroInfo heros = 2; //可上阵的英雄列表
+	optional int32 teamNum=3; //玩家自己的队伍编号
+	repeated UserInfo userInfos=4;  //对阵玩家列表
+	repeated SkillInfo skillInfo=5; //主角技能CD 显示
+	repeated EnergyBean energyBeans=6; //能量豆列表
+
+}
+
+message EnergyBean
+{
+	optional int32 index=1; //豆子唯一标识
+	optional int32 time=2;  //剩余消失时间  单位毫秒
+}
+
+message SkillInfo
+{
+	optional int32 skillId=1; //技能id
+	optional int32 time=2; //下次可以释放的倒计时时间 单位毫秒  0 就是无CD 
+}
+
+message UserInfo
+{
+	optional int32 index=1;       // index =-1 是pve电脑
+	optional int32 roleType=2;
+	optional string roleName=3;   
+	optional int32 teamNum=4;
+	optional int32 energy=6; //  能量值
+	repeated int32 heroId=5;  //可上阵的英雄列表
+}
+
+message Target {
+	optional int32 index=1;//被攻击目标(index)
+	optional int32 loss=2;//目标损失的数值
+	optional AttackType attackType=3;//目标受到的攻击类型
+	optional int32 current=4;//目标剩余，当lostType为Hp时，0则死亡
+	optional int32 maxHp=5;//目标最大血量
+	optional int32 anger=6; //怒气值	
+}  
+
+message HeroAngerChangeResponse
+{
+	optional int32 index=1;//英雄唯一标识
+	optional int32 anger=2; //怒气值	
+}
+
+
+message HpChangeResponse {
+	optional Target targets=1; 
+}
+
+enum AttackType {
+	Hit=1;//命中
+	Miss=2;//闪避
+	Cri=3;//暴击（会心一击）
+	Secondkill=4;  //秒杀
+	Immune=5; //免疫
+}
+ 
+ 
+message PutInHeroChange {
+	optional BattleHeroInfo battleHero=1;
+}
+
+
+message BattleHeroInfo
+{
+	optional int32 index=1;
+	optional int32 heroId=2;  //ID
+	optional int32 maxHp=3; //最大血量
+	optional int32 hp=4; //当前血量
+	optional int32 position=5;  //位置   1-9  放入   -1 移除
+	optional int32 teamNum=6; //所属队伍
+	repeated BuffResponse buffResponse=7;   //buff 信息
+}
+
+
+message ChanllengeResult{
+	optional int32 winTeamId=1;  //胜利队伍编号
+
+}
+
+message GameHeroInfo
+{
+	optional int32 heroId=1; //英雄ID 
+	optional int32 level=2;  //英雄等级
+	optional int32 position=3;  //默认设置中的位置   0-8  上阵中的  9-14 是下面备选的
+}
+
+
+message MatchingSuccessResponse
+{
+	optional int32 pvpMapId=1; //匹配成功
+
+}
+
+message HeroBagChange
+{
+	optional int32 index=1; //变动玩家index 
+	optional int32 heroId=2; //移除的英雄ID 
+}
+
+message OperationInfo
+{
+	optional int32 index=1;  //玩家标识
+	optional int32 type=2;  // 1 英雄 2 技能
+	optional int32 value=3;  //英雄ID or 技能ID 
+}
+
+message PickEnergyBean
+{
+	optional int32 index=1; //拾取豆的index  
+	
+}
+
+message SendLog
+{
+	optional int32 type=1;   //预留 type 可不传递
+	optional string message=2; //log 内容
+}
+
+
+
+
+ 

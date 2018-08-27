@@ -1,0 +1,8 @@
+package proto.role;
+
+
+message ChangeExpResponse
+{
+	optional int64 exp=1;
+	optional int32 level = 2;//玩家等级不为0时，玩家升级
+}

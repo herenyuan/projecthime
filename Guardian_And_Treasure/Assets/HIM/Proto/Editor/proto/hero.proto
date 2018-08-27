@@ -1,0 +1,73 @@
+package proto.hero;
+
+message HeroInfoResponse
+{
+	repeated HeroInfo heros = 1; //英雄列表
+}
+
+
+message HeroInfo
+{
+	optional int32 heroId=1; //英雄ID 
+	optional int32 level=2;  //英雄等级
+	optional int32 position=3;  //默认设置中的位置   0-8  上阵中的  9-14 是下面备选的
+}
+
+
+enum Attributes
+{
+ 
+	MaxHp=1;//1.生命基础值
+	PhysicsHurt=2; //物理伤害基础值
+	MagicHurt =3;//魔法伤害基础值
+
+	WarLawHurt=4;//战法伤害基础值
+	AddHp=5;//等级增加生命
+	AddPhysicsHurt = 6;//物理伤害每级增加值
+	AddMagicHurt=7;//魔法伤害每级增加值
+	AddWarLawHurt=8;//战法伤害每级增加值
+	
+	Power=11;  //力量
+	Intelligence=12;    //智力
+	Commander=13;   //统帅
+	
+	AddPower=14;  //14.力量每级增加值
+	AddIntelligence=15;    //15.智力每级增加值
+	AddCommander=16;   //16.统帅每级增加值
+	
+	Miss=21;  //闪避
+	Cri=22;   //暴击
+	Secondkill=23;  //秒杀
+	
+ 
+ 
+	
+	 Att31=31;  //物理伤害参数3
+	 Att32=32;    //魔法伤害参数3
+	 Att33=33;   //战法伤害参数3 
+	
+	
+	 Att34=34;  //物理伤害参数4
+	 Att35=35;    //魔法伤害参数4
+	 Att36=36;   //战法伤害参数4 
+ 
+}
+
+message DefaultSettingResponse
+{
+	repeated HeroInfo heros = 1; // 设置默认上阵英雄的列表
+}
+
+
+message ChangeDefaultSetRequest
+{
+	optional int32 heroId=1;   //英雄ID 
+	optional int32 position=2; //放置的位置
+	optional int32 stageId=3;  //副本Id  -1 PVP other 关卡
+}
+
+
+
+
+
+

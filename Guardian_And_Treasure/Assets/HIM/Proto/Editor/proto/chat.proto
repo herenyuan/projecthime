@@ -1,0 +1,73 @@
+package proto.chat;
+
+message ChatRequest
+{
+	optional ChatType chatType=1;
+	optional UserInfo receiver=2;//私聊时的信息收到者
+	optional string message=3;
+}
+
+message ChatResponse
+{
+	optional ChatType chatType=1;
+	optional UserInfo sender=2;  //信息发送人  or 系统消息中消息的参与者
+	optional UserInfo receiver=3;//私聊时的信息收到者  
+ 	//消息内容or系统消息错误码or战盟的名字or广播中的物品(id,ItemId,强化+N,color)or合成物品 itemId
+	//(noticeId,message)
+	optional string message=4;  
+	optional string url=6;	     //超链接
+	optional ShowType showType=7;    //显示位置  仅仅适用于ChatType=8
+}
+
+ 
+message UserInfo
+{
+	optional string roleId=1;
+	optional string roleName=2;
+	optional int32 roleType=3;
+	optional int32 index=4;
+	optional int32 vipLevel=5;
+	optional string leagueName=7;//战盟名字
+	optional int32 roleLevel=11;//等级
+}
+
+enum ChatType{
+	World=1;    //世界
+	Current=2;  //当前
+	Legion=3;   //军团
+	Team=4;     //队伍
+	Person=5;   //私聊
+	Horn=6;     //喇叭
+	Mine=10;     //自己
+	ErrorCode=7;   //错误码 信息
+	Announce=8;    //公告信息
+	Notice=9;      //Notice.xlsx公告
+}
+
+enum ShowType{
+	
+	Marquee=2;    //跑马灯
+	ChatChannel=4;//聊天频道
+	MarqueeAndChatChannel=6; //跑马灯And聊天频道
+	UpCenter=8;//屏幕中央
+	MarqueeAndUpCenter=10;//跑马灯And屏幕中央
+	ChatChannelAndUpCenter=12;//聊天频道And屏幕中央
+	All=14;     //全部显示
+}
+
+message ListInfoRequest
+{
+	optional string roleId=1;
+	optional string roleName=2;
+}
+
+ 
+
+
+
+
+
+
+
+
+

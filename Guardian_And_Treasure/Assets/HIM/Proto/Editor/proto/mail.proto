@@ -1,0 +1,64 @@
+package proto.mail;
+import "bag.proto";
+
+message ListRequest
+{
+	optional int32 page=1;
+	optional bool isAttachment=2;  //true：有附件  false: 无附件
+}
+
+message ListResponse
+{
+	repeated MailResponse mailResponse=1;
+	optional int32 mailAmount =2;//邮件数量
+	optional int32 unread = 3;//未读邮件数量
+	optional int32 total =4;//总页数
+}
+
+
+//特别说明  mailType=Consignment的时候  mid =2 寄卖行卖出了物品 无附件文字提示  
+message MailResponse
+{
+	optional int32 mailType=1;//邮件类型
+	optional int32 mid=2;//邮件类型对应的活动or副本ID
+	optional bool isRead=3;//是否已读
+	optional bool isReceive=4;//是否已经领取
+	optional string createDate=5;//创建时间 
+	optional string deleteDate=6;//邮件删除时间
+	optional bool isAttachment=7;//是否有附件
+	optional string uid=8;//邮件唯一id
+	optional string title=9;//标题      (mid =2 收益)
+	optional string content=10;//内容  （mid =2 物品Id,Num）
+	optional SendType sendType=11;//发送类型
+}
+
+//邮件详细信息，领取附件
+message MailRequest
+{
+	optional string uid=1;//邮件唯一id
+}
+
+message MailDetailResponse
+{
+	repeated bag.ItemResponse itemList = 1;
+	optional string message=2;
+	optional int32 mailType=3;//邮件类型
+	optional string uid=4;//邮件唯一id
+	optional string title=5;//标题
+	optional string content=6;//内容
+	optional SendType sendType=7;//发送原因
+}
+
+
+enum SendType{
+	Offline= 1;	        // 不在线
+	BagFull= 0;		    // 背包已满
+	NotReceive=2;		//没有及时领取
+	titleNotice=7;     //系统通知
+}
+ 
+message DeleteRequest
+{
+	optional string uid=1;
+}
+

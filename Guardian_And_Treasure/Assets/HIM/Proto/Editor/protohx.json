@@ -1,0 +1,7 @@
+{
+"protoPath":"proto",
+"haxeOut":"hx",
+"protoFiles":["proto/*.proto"],
+"cleanOut":true,
+"javaOut":null
+}

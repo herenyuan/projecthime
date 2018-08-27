@@ -1,0 +1,9 @@
+package proto.common;
+
+
+message ErrorInfoResponse
+{
+	optional int32 code=1;//错误码
+	optional string info=2;//相关信息 
+}
+ 

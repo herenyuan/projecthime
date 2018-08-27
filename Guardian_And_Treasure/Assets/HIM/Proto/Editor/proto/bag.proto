@@ -1,0 +1,141 @@
+package proto.bag;
+import "login.proto";
+
+enum PackageType{
+	BAG= 1;		// 背包
+}
+
+//请求信息的时候指定是背包或者仓库
+message PackageRequest
+{
+	optional PackageType type=1;   	//1:背包  2:仓库 
+}
+
+message PackageInfoResponse
+{
+	optional int32 used = 1;	//已用格子数量
+	optional int32 total = 2; 	//格子总个数
+	optional PackageType type=4;   	//1:背包  2:仓库 
+}
+
+//返回物品列表
+message PackageItemListResponse 
+{
+	required int32 sign = 1; //0表示第一次发 1表示中间的 2 表示发完了 只有一页的时候发3
+	repeated ItemResponse itemList = 2;
+	optional PackageType type=3;   	//1:背包  2:仓库 
+}
+
+//获取物品协议   Item中只会传入 itemId 和 amount 2个参数
+message AddNewItemNumResponse 
+{
+	repeated ItemResponse itemList = 1;
+	optional bool isPick=2;//true：拾取
+	optional bool playEffect=3;//是否播放进包特效
+	optional int32 sellId=4[default=0];//售卖Id 在商店等地方，使用铜钱，元宝等，购买回来的物品。
+	optional bool isBackBuy=5[default=false];//是否回购 false:不是回购
+	optional bool  isSell=6[default=false];//是否售出 false:不是售出
+	optional AddItemWay type=7;//道具获取途径
+}
+
+//道具增加类型
+enum AddItemWay{
+	DRAGTOBAG = 1;//拖动增加(仓库到背包)
+	EXCHANGE = 2;//拾取增加
+	REWARD = 3;//奖励增加
+	BUYBACK = 4;//回购增加
+	GOLDBUY = 5;//金币购买
+	DIAMOND = 6;//元宝购买
+	GIFTBAG = 8;//礼包中增加
+}
+
+message ItemResponse
+{
+	optional int32 id = 1;		//物品唯一ID
+	optional int32 itemid=2;	//物品配置文件id
+	optional int32 amount=3;	//持有数量 为0时删除
+	optional sint32 position=4;	//物品位置
+	optional ItemType itemType=5;	//物品类型
+	optional bool isBound=6;   	    //是否绑定
+	optional PackageType type=8;   	//1:背包  2:仓库
+}
+
+message RomoveItemRequestAndResponse
+{
+	required int32 id=1;//物品唯一id
+}
+
+enum ConsumeItemWay{
+	DRAGTOWAREROOM =1;//拖动消耗(背包到仓库)
+	DROPPED=2;//掉落消耗
+	SMELT=3;//熔炼
+}
+
+message SplitItemRequest
+{
+	required int32 id=1;//物品唯一id
+	required int32 amount=2;//需要分离的数量 
+	optional PackageType type=3;   	//1:背包  2:仓库 
+}
+
+message SplitItemResponse 
+{
+	repeated ItemResponse itemList = 1;
+	optional PackageType type=2;   	//1:背包  2:仓库 
+}
+
+//请求拖动
+message DragItemRequest
+{
+	required int32 id=1;//物品唯一id
+	optional int32 position=2;//目标格子位置
+	optional PackageType type=3;   	//1:背包  2:仓库 
+}
+
+//返回拖动
+message DragItemResponse 
+{
+	repeated ItemResponse itemList = 1;
+	optional PackageType type=2;   	//1:背包  2:仓库 
+}
+
+//请求解锁格子
+message UnlockBoxRequest
+{
+	optional int32 position = 1; //开启格子选中的的格子号
+	optional PackageType type=2;   	//1:背包  2:仓库 
+}
+
+//请求移动物品到其它界面
+message MoveRequest
+{
+	required int32 id = 1;//物品唯一id
+	optional int32 position = 2;//目标格子位置（如果值为-1，表示无具体位置，需服务端自动分配位置）
+}
+
+message MoveResponse
+{
+	 repeated ItemResponse itemList = 1;
+}
+
+message UseItemRequestAndResponse
+{
+	required int32 id=1;		//物品唯一id
+	optional int32 amount=2;    //物品剩余个数
+}
+
+//查看展示物品  返回null  or  ItemResponse
+message SeeItemRequest
+{
+	required int32 id=1;	       //物品唯一id
+	optional string roleId =2;     //物品所属玩家
+	optional int32 itemId=3;       //物品ID
+}
+
+enum ItemType{
+	MONEY=1;        // 货币
+	EXPEND=2;		// 消耗品
+	MATERIAL=3; 	// 材料
+	DEBRIS=4;	    // 碎片
+	EQUIP=5;		// 装备
+}

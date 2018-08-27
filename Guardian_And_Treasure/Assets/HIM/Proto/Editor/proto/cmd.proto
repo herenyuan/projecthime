@@ -1,0 +1,81 @@
+package proto.cmd;
+
+
+enum PushCmd {
+ 
+	
+	ChangeExp=20;//玩家获得经验
+	ChangeMoney=21;//玩家货币变动
+	
+	HeroChange=1199; //英雄变更，获得新英雄
+	
+	ChallengeResult=1299; //副本结束
+	HeroAngerChange=1298;  //英雄怒气值变更
+	HeroBagChange=1297;    //战斗中英雄背包变更
+		
+	MatchingSuccess=1399; //匹配成功
+	DropEnergyBean=1396; //掉落能量豆
+	
+	
+	GameStart=1394;  //游戏开始
+	GameStop=1393;   //游戏暂停
+	
+	OpenFunction=1499;//开启功能列表
+	FunctionInfo=1498;//已开启功能列表
+	
+	//（背包/仓库）系统
+	DeductItems=1599;         //背包物品删除
+	AddItems=1598;	          //背包物品增加
+	AddNewItems=1597;         //背包新物品增加
+	UpdateItemVo=1596;	 	 //更新物品信息
+
+	NewMail=1699; //收到新邮件
+	
+}
+  
+enum EchoCmd {
+
+	Sync=0; //同步消息 （包含攻击，buff ）
+ 
+	Chat=10; //聊天
+	Login = 1001; //正式登录
+	CreateName=1002; //创建角色名
+	
+	HeroInfo=1101; //请求英雄信息
+	DefaultSetting=1102; //请求默认设置
+	ChangeDefaultSet=1103; //修改默认设置
+	
+
+	ChallengeDungeon=1201; //挑战副本
+	ChallengeDungeonInfo=1202;   //副本信息  （返回已经挑战成功的副本列表）
+	ChallengeExit=1203;//退出
+	PutInHero=1204;//放入Hero
+	DungeonInfo=1205; //进入副本 获取在场上的英雄信息
+	
+	OperationInfo=1206; // 当前操作的信息 英雄 or 主角技
+	PickEnergyBean=1207; //拾取能量豆
+	
+	
+	MatchingPvp=1301; //pvp 请求匹配
+	CancelMatchingPvp=1302; //取消匹配
+
+	LISTPACKAGEITEM=1310; //请求背包物品列表
+	
+	//邮件
+	LISTMAIL=1401;//邮件列表
+	MAILDETAIL=1402;//获取邮件文本
+	SENDMAIL=1403;//发送邮件
+	RECEIVEATTACHMENT=1404;//获取附件
+	DELETEMAIL=1405;//删除邮件	
+	
+		
+	GMREQUEST = 9900;    //前端GM命令
+	SendLog=9901; //前端发送错误日志
+	
+}
+ 
+enum ErrorCmd {
+	ERROR = 9999;//出错了
+}
+
+  

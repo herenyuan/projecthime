@@ -1,0 +1,40 @@
+package proto.challenge;
+
+
+message ChallengeDungeonInfoResponse
+{
+	repeated int32 stageId = 1;//副本Id列表
+}
+
+message ChallengeRequest
+{
+	optional int32 stageId = 1;//副本Id
+	
+	optional int32 roleLv=2;  //玩家英雄等级
+	optional int32 npcLv=3;   //NPC 英雄等级
+	
+}
+
+message ChallengeResponse
+{
+	optional int32 stageId = 1;//副本Id
+	optional bool result=2; //结果   true胜利 false失败
+}
+
+message ChallengeInfoRequest
+{
+
+	optional int32 stageId = 1;//副本Id  
+	
+	//todo断线重连 方案后续支持
+	
+}
+
+
+message PutInHeroRequest
+{
+	optional int32 heroId = 1;
+	optional int32 position = 2;
+}
+
+

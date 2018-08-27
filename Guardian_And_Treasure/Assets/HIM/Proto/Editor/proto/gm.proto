@@ -1,0 +1,8 @@
+package proto.gm;
+
+
+message GmRequest
+{
+	optional string cmd = 1;//命令字符串
+	optional string content = 2;//命令内容，参数之间用空格号分隔
+}

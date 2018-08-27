@@ -1,0 +1,26 @@
+package proto.errorcode;
+
+enum ErrorCodeResponse {
+	LllegalCharacter=9000;//输入了非法字符
+	ErrorOfRoleFormmat = 9001;//名字中不能包含非法字符
+	RolenameExist=9002; //角色名已存在
+	ErrorOfPassword = 9003;//密码错误
+	ShortName = 9004;//名字长度不符
+	
+	BagPositionNotEnough=9010;//背包格子不足
+	
+	NotHero=9100; //你没有这个英雄
+	NotRepeatSetHero=9101; //不能重复放入英雄
+	NotRepeatSetPosition=9102; //不能重复放入位置
+	UpHeroMoreMax=9110; //设置上场英雄已达最大限制
+	SpareHeroMoreMax=9111; //备用上阵英雄已达最大限制
+	
+	ItemNotEnough=9120; //道具不足
+	
+	PutInHeroCD=9130;   //放入英雄在CD中
+	EnergyNotEnough=9131;   //能量不足不能释放技能
+	HeroAlreadyDead=9132;   //只能对英雄释放或者英雄已经死亡
+	WoodNotPutInHero=9133;  //木桩只能放在空位上
+	 
+	
+}
