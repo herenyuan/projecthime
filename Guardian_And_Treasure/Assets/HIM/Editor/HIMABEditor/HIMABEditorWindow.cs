@@ -23,8 +23,11 @@ public class HIMABEditorWindow : EditorWindow
     public int srcOnChoose = 0;
     public DirectoryInfo AssetPath;
     public string ImportFolder = "";
-    public string ExportFolder = "";
+    public bool viewDetail = false;
     public UnityEngine.Object[] SelectedObject;
+
+    private BuildTarget buildTarget = BuildTarget.Android;
+
     public List<System.Type> SelectType = new List<System.Type>()
     {
         typeof(UnityEditor.DefaultAsset),
@@ -32,6 +35,19 @@ public class HIMABEditorWindow : EditorWindow
     public List<string> filterExName = new List<string>()
     {
         ".meta",
+        ".cs",
+        ".proto",
+        ".txt",
+        ".dll",
+        ".ps1",
+        ".xslt",
+        ".pdb",
+        ".exe",
+        ".mdb",
+        ".config",
+        ".sh",
+        ".scc",
+        ".BAT"
     };
 
     Vector2 scrollPosition = Vector2.zero;
@@ -44,7 +60,7 @@ public class HIMABEditorWindow : EditorWindow
         {
             FolderInfo folder = new FolderInfo();
             folder.root = Application.dataPath;
-            
+
             folder.name = paths[i].Remove(0, Application.dataPath.Length);
             folderCollection.Add(folder);
         }
@@ -52,6 +68,12 @@ public class HIMABEditorWindow : EditorWindow
 
     private void OnGUI()
     {
+        SelectedObject = Selection.objects;
+        for (int i = 0; i < SelectedObject.Length; i++)
+        {
+            EditorGUILayout.LabelField(AssetDatabase.GetAssetPath(SelectedObject[i]));
+        }
+
         EditorGUILayout.BeginHorizontal();
 
         bool refreshFolder = GUILayout.Button("刷新资源目录", GUILayout.ExpandWidth(true));
@@ -77,7 +99,7 @@ public class HIMABEditorWindow : EditorWindow
         for (int i = 0; i < folderCollection.Count;)
         {
             EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
-            
+
             EditorGUILayout.LabelField(string.Format("目录[{0}]", i), GUILayout.Width(50));
             EditorGUILayout.LabelField(folderCollection[i].root, GUILayout.ExpandWidth(true));
             GUI.color = Color.green;
@@ -95,64 +117,22 @@ public class HIMABEditorWindow : EditorWindow
             EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.EndVertical();
-        bool searchBegin = GUILayout.Button("开始搜索");
-
-        if (searchBegin)
+        if (folderCollection.Count > 0)
         {
-            fileCollection.Clear();
-            this.Search();
-            this.Filter();
-            this.SaveFolder();
-        }
-        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-        GUILayout.BeginVertical();
-        for (int i = 0; i < fileCollection.Count; i++)
-        {
-            FileInfo fi = fileCollection[i];
-            
-            EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
-            EditorGUILayout.LabelField(fi.DirectoryName, GUILayout.ExpandWidth(true));
-            EditorGUILayout.LabelField(fi.Name, GUILayout.ExpandWidth(true));
-            EditorGUILayout.EndHorizontal();
-        }
-        GUILayout.EndVertical();
-        EditorGUILayout.EndScrollView();
-
-        bool beginPackage = GUILayout.Button("开始打包");
-        if (beginPackage)
-        {
-            pkgCollection.Clear();
-            for (int i = 0;i<fileCollection.Count;i++)
+            bool searchBegin = GUILayout.Button("开始搜索");
+            if (searchBegin)
             {
-                PkgInfo pkg = new PkgInfo();
-                FileInfo fi = fileCollection[i];
-                pkg.assetName = "Assets" + fi.FullName.Remove(0, Application.dataPath.Length);
-                pkg.assetName = pkg.assetName.Replace(@"\", "/");
-                string ext = Path.GetExtension(pkg.assetName);
-                pkg.outputName = pkg.assetName.Replace(ext,"");
-                Debug.Log(pkg.outputName);
-                pkgCollection.Add(pkg);
+                fileCollection.Clear();
+                this.Search();
+                this.Filter();
+                this.SaveFolder();
             }
-            string output = Application.dataPath + "/StreamingAssets/Android/";
-            AssetBundleBuild[] builds = new AssetBundleBuild[pkgCollection.Count];
-            for (int i = 0; i < pkgCollection.Count; i++)
-            {
-                AssetBundleBuild build = new AssetBundleBuild();
-                string[] assetNames = new string[] 
-                {
-                    pkgCollection[i].assetName,
-                };
-                //工程中的文件路径
-                build.assetNames = assetNames;
-                //会产生文件路径
-                build.assetBundleName = pkgCollection[i].assetName;
-                builds[i] = build;
-            }
-            if (!Directory.Exists(output)) { Directory.CreateDirectory(output); }
-            BuildPipeline.BuildAssetBundles(output, builds, BuildAssetBundleOptions.None, BuildTarget.Android);
-            AssetDatabase.Refresh();
         }
-
+        if (fileCollection.Count > 0)
+        {
+            this.ViewFileDetail();
+            this.StartBuildAssetBundle();
+        }
     }
     private void Search()
     {
@@ -165,7 +145,7 @@ public class HIMABEditorWindow : EditorWindow
                 this.SearchProcess(di);
             }
         }
-        
+
     }
     void SearchProcess(DirectoryInfo root)
     {
@@ -186,23 +166,29 @@ public class HIMABEditorWindow : EditorWindow
         for (int i = 0; i < fileCollection.Count;)
         {
             FileInfo fi = fileCollection[i];
+            bool remove = false;
             for (int j = 0; j < filterExName.Count; j++)
             {
-                if(fi.Extension.Equals(filterExName[j]))
+                if (fi.Extension.Contains(filterExName[j]))
                 {
-                    fileCollection.RemoveAt(i);
+                    remove = true;
+                    break;
                 }
-                else
-                {
-                    i++;
-                }
+            }
+            if (remove)
+            {
+                fileCollection.RemoveAt(i);
+            }
+            else
+            {
+                i++;
             }
         }
     }
     void SaveFolder()
     {
         ImportFolder = "";
-        for(int i = 0;i<folderCollection.Count;i++)
+        for (int i = 0; i < folderCollection.Count; i++)
         {
             ImportFolder += folderCollection[i].FullName + ";";
         }
@@ -211,27 +197,70 @@ public class HIMABEditorWindow : EditorWindow
             PlayerPrefs.SetString("ImportFolder", ImportFolder);
         }
     }
-    static void Load()
+    void ViewFileDetail()
     {
-        //获取要打包的对象（在 Project 视图中）  
-        //Object[] selects = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
-        //遍历选中的对象  
-        //foreach (Object obj in selects)
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField(string.Format("一共 [{0}] 个文件...", fileCollection.Count), GUILayout.Width(120));
+        viewDetail = EditorGUILayout.Toggle("展开细节", viewDetail);
+        EditorGUILayout.EndHorizontal();
+        if (viewDetail)
         {
-            //这里建立一个本地测试  
-            //注意本地测试中可以是任意的文件，但是到了移动平台只能读取路径 StreamingAssets 里面的
-            //string targetPath = Application.dataPath + "/AssetBundleLearn/StreamingAssets/" + obj.name + ".assetbundle";
-            //文件的后缀名是assetbundle和unity都可以  
-            //if (BuildPipeline.BuildAssetBundles())
-            //{
-            //    Debug.Log(obj.name + "is packed successfully!");
-            //}
-            //else
-            //{
-            //    Debug.Log(obj.name + "is packed failly!");
-            //}
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+            GUILayout.BeginVertical();
+            for (int i = 0; i < fileCollection.Count; i++)
+            {
+                FileInfo fi = fileCollection[i];
+
+                EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField(fi.DirectoryName, GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField(fi.Name, GUILayout.ExpandWidth(true));
+                EditorGUILayout.EndHorizontal();
+            }
+            GUILayout.EndVertical();
+            EditorGUILayout.EndScrollView();
         }
-        AssetDatabase.Refresh();
+    }
+    void StartBuildAssetBundle()
+    {
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("目标平台：", GUILayout.Width(60));
+        buildTarget = (BuildTarget)EditorGUILayout.EnumPopup(buildTarget, GUILayout.Width(200));
+        bool beginPackage = GUILayout.Button("开始打包");
+        GUILayout.EndHorizontal();
+
+        if (beginPackage)
+        {
+            pkgCollection.Clear();
+            for (int i = 0; i < fileCollection.Count; i++)
+            {
+                PkgInfo pkg = new PkgInfo();
+                FileInfo fi = fileCollection[i];
+                pkg.assetName = "Assets" + fi.FullName.Remove(0, Application.dataPath.Length);
+                pkg.assetName = pkg.assetName.Replace(@"\", "/");
+                string ext = Path.GetExtension(pkg.assetName);
+                pkg.outputName = pkg.assetName.Replace(ext, "");
+                Debug.Log(pkg.outputName);
+                pkgCollection.Add(pkg);
+            }
+            string output = Application.dataPath + "/StreamingAssets/Android/";
+            AssetBundleBuild[] builds = new AssetBundleBuild[pkgCollection.Count];
+            for (int i = 0; i < pkgCollection.Count; i++)
+            {
+                AssetBundleBuild build = new AssetBundleBuild();
+                string[] assetNames = new string[]
+                {
+                    pkgCollection[i].assetName,
+                };
+                //工程中的文件路径
+                build.assetNames = assetNames;
+                //会产生文件路径
+                build.assetBundleName = pkgCollection[i].assetName;
+                builds[i] = build;
+            }
+            if (!Directory.Exists(output)) { Directory.CreateDirectory(output); }
+            BuildPipeline.BuildAssetBundles(output, builds, BuildAssetBundleOptions.None, buildTarget);
+            AssetDatabase.Refresh();
+        }
     }
 }
 
