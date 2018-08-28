@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1330562476
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b18f0b65d63b5b31abd5f4b972d6571e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c73412a662fd4e4f36af34cbdf078b85
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/Src/texture/ButtonArrowUpSprite.png
+Dependencies: []

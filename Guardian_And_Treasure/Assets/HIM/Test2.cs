@@ -9,7 +9,7 @@ public class Test2 : MonoBehaviour {
     public bool Find = false;
 	void Start () {
 
-  
+        HIMResources.Ins.Online();
     }
 
     // Update is called once per frame
@@ -18,29 +18,8 @@ public class Test2 : MonoBehaviour {
         if (Active)
         {
             Active = false;
-            for (int i = 0; i < 100000; i++)
-            {
-                int seed = Random.Range(0, 3);
-                switch (seed)
-                {
-                    case 0:
-                        Scene scene = new Scene();
-                        break;
-                    case 1:
-                        Character character = new Character();
-                        break;
-                    case 2:
-                        EventTrigger eventTrigger = new EventTrigger();
-                        break;
-                }
-            }
+            HIMResources.Ins.LoadPrefab(HIMPath.Prefab, "ball");
         }
-        if (Find)
-        {
-            Find = false;
-            List<Scene> datas;
-            HIMEDataBase.Get<Scene>(100000, out datas);
-            Debug.Log("一共 ---------------------> " + datas.Count);
-        }
+        
     }
 }

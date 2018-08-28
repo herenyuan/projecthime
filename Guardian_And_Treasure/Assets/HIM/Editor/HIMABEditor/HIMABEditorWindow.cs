@@ -53,6 +53,7 @@ public class HIMABEditorWindow : EditorWindow
     Vector2 scrollPosition = Vector2.zero;
     public void Initialization()
     {
+        buildTarget = HIMAssetBundleOption.Current;
         pathAssets = Application.dataPath;
         ImportFolder = PlayerPrefs.GetString("ImportFolder");
         string[] paths = ImportFolder.Split(new char[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -222,9 +223,13 @@ public class HIMABEditorWindow : EditorWindow
     }
     void StartBuildAssetBundle()
     {
+
         GUILayout.BeginHorizontal();
+        GUILayout.Space(10);
         EditorGUILayout.LabelField("目标平台：", GUILayout.Width(60));
-        buildTarget = (BuildTarget)EditorGUILayout.EnumPopup(buildTarget, GUILayout.Width(200));
+        EditorGUI.BeginDisabledGroup(true);
+        EditorGUILayout.TextField(HIMAssetBundleOption.Current.ToString(), GUILayout.Width(120));
+        EditorGUI.EndDisabledGroup();
         bool beginPackage = GUILayout.Button("开始打包");
         GUILayout.EndHorizontal();
 
@@ -237,12 +242,12 @@ public class HIMABEditorWindow : EditorWindow
                 FileInfo fi = fileCollection[i];
                 pkg.assetName = "Assets" + fi.FullName.Remove(0, Application.dataPath.Length);
                 pkg.assetName = pkg.assetName.Replace(@"\", "/");
-                string ext = Path.GetExtension(pkg.assetName);
-                pkg.outputName = pkg.assetName.Replace(ext, "");
+                string saveName = fi.FullName.Remove(0, Application.dataPath.Length + 1);
+                pkg.outputName = saveName;
                 Debug.Log(pkg.outputName);
                 pkgCollection.Add(pkg);
             }
-            string output = Application.dataPath + "/StreamingAssets/Android/";
+            string output = Application.dataPath + "/StreamingAssets/" + buildTarget.ToString() + "/";
             AssetBundleBuild[] builds = new AssetBundleBuild[pkgCollection.Count];
             for (int i = 0; i < pkgCollection.Count; i++)
             {
@@ -254,11 +259,11 @@ public class HIMABEditorWindow : EditorWindow
                 //工程中的文件路径
                 build.assetNames = assetNames;
                 //会产生文件路径
-                build.assetBundleName = pkgCollection[i].assetName;
+                build.assetBundleName = pkgCollection[i].outputName;
                 builds[i] = build;
             }
             if (!Directory.Exists(output)) { Directory.CreateDirectory(output); }
-            BuildPipeline.BuildAssetBundles(output, builds, BuildAssetBundleOptions.None, buildTarget);
+            BuildPipeline.BuildAssetBundles(output, builds, BuildAssetBundleOptions.None, HIMAssetBundleOption.Current);
             AssetDatabase.Refresh();
         }
     }
