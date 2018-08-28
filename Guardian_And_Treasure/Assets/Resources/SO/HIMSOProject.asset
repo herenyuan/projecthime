@@ -9,8 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44030b3a57bb9624e81bf395ed686b27, type: 3}
-  m_Name: HIMProject
+  m_Name: HIMSOProject
   m_EditorClassIdentifier: 
-  AssetBundleRoot: HOA
-  AssetBundlePlatform: StandaloneWindows
-  AssetBundleSrc: '{0}/{1}/src/'
+  Date: 
+  Version: 1.0.0.17
+  PathAssets: Assets/
+  PathResources: Assets/Resources/
+  PathABExport: ABResources/
+  Path:
+  - key: SO
+    value: /SO/
+  - key: Prefab
+    value: /Prefab/

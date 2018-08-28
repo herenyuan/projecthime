@@ -8,7 +8,6 @@ using UnityEngine;
 /// </summary>
 public class HIMResources : SingleMono<HIMResources>
 {
-    
     public Action<string> onErrorCallBack;
     public AssetBundle MainBundle;
     private AssetBundleManifest Manifest { get; set; }
@@ -53,13 +52,10 @@ public class HIMResources : SingleMono<HIMResources>
         GameObject original = bundle.LoadAsset<GameObject>(_Name + extension);
         GameObject clone = GameObject.Instantiate(original);
     }
+    public T LoadSO<T>(string _Path, string _Name) where T : ScriptableObject
+    {
+        string relativeName = _Path + _Name;
+        return Resources.Load<T>(relativeName);
+    }
+}
 
-}
-public class HIMPath
-{
-    public static readonly string total = Application.dataPath + "/StreamingAssets/StandaloneWindows/";
-    public static readonly string Root = Application.dataPath + "/StreamingAssets/";
-    public static readonly string Src = "src/";
-    //暂定 预设 资源路径
-    public static readonly string Prefab = Application.dataPath + "/StreamingAssets/StandaloneWindows/src/prefab/";
-}

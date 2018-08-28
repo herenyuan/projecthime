@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class HIMProjectSettingWindow : EditorWindow
 {
-    HIMProject projectData;
+    HIMSOProject projectData;
     public void Initialization()
     {
-        projectData = Resources.Load<HIMProject>("SO/HIMProject");
+        projectData = Resources.Load<HIMSOProject>("SO/HIMSOProject");
     }
     private void OnGUI()
     {
@@ -19,13 +19,14 @@ public class HIMProjectSettingWindow : EditorWindow
             bool create = GUILayout.Button("创建工程设置");
             if (create)
             {
-                string path = "Assets/Resources/SO/HIMProject.asset";
-                projectData = ScriptableObject.CreateInstance<HIMProject>();
+                string path = "Assets/Resources/SO/HIMSOProject.asset";
+                projectData = ScriptableObject.CreateInstance<HIMSOProject>();
                 if (!Directory.Exists(Application.dataPath + "/Resources/SO/")) { Directory.CreateDirectory(Application.dataPath + "/Resources/SO/"); AssetDatabase.Refresh(); }
                 AssetDatabase.CreateAsset(projectData, path);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
             }
         }
+        
     }
 }

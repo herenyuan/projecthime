@@ -8,7 +8,7 @@ public class Test2 : MonoBehaviour {
     public bool Active = false;
     public bool Find = false;
 	void Start () {
-
+        HIM.Online();
         HIMResources.Ins.Online();
     }
 

@@ -223,9 +223,7 @@ public class HIMABEditorWindow : EditorWindow
     }
     void StartBuildAssetBundle()
     {
-
         GUILayout.BeginHorizontal();
-        GUILayout.Space(10);
         EditorGUILayout.LabelField("目标平台：", GUILayout.Width(60));
         EditorGUI.BeginDisabledGroup(true);
         EditorGUILayout.TextField(HIMAssetBundleOption.Current.ToString(), GUILayout.Width(120));
