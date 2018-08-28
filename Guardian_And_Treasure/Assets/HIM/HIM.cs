@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class HIM
 {
-    public static HIMSOProject Project;
+    private static HIMSOProject m_Project;
+    public static HIMSOProject Project
+    {
+        get
+        {
+            if(m_Project == null)
+            {
+                m_Project = HIMResources.Ins.LoadSO<HIMSOProject>("/SO/", "HIMSOProject");
+            }
+            return m_Project;
+        }
+    }
     public static void Online()
     {
-        Project = HIMResources.Ins.LoadSO<HIMSOProject>(HIMPath.SO, "HIMSOProject");
+        
     }
 }

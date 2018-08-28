@@ -14,7 +14,7 @@ using UnityEngine;
 /// </summary>
 public class HIMABEditorWindow : EditorWindow
 {
-    private string waterMark = "请填写目标资源路径";
+    public HIMSOProject projectData;
     public UnityEngine.Object[] selected;
     public string pathAssets = "";
     public List<FolderInfo> folderCollection = new List<FolderInfo>();
@@ -238,6 +238,7 @@ public class HIMABEditorWindow : EditorWindow
             {
                 PkgInfo pkg = new PkgInfo();
                 FileInfo fi = fileCollection[i];
+                
                 pkg.assetName = "Assets" + fi.FullName.Remove(0, Application.dataPath.Length);
                 pkg.assetName = pkg.assetName.Replace(@"\", "/");
                 string saveName = fi.FullName.Remove(0, Application.dataPath.Length + 1);

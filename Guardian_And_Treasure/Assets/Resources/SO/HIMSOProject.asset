@@ -16,8 +16,3 @@ MonoBehaviour:
   PathAssets: Assets/
   PathResources: Assets/Resources/
   PathABExport: ABResources/
-  Path:
-  - key: SO
-    value: /SO/
-  - key: Prefab
-    value: /Prefab/

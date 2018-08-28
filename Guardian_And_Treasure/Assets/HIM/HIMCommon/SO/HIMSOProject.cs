@@ -13,11 +13,26 @@ public class HIMSOProject : ScriptableObject
     public string PathResources = "Assets/Resources/";
     public string PathABExport = "ABResources/";
 
-    public List<HIMPath_> Path = new List<HIMPath_>()
-    {
-        new HIMPath_("SO","/SO/"),
-        new HIMPath_("Prefab","/Prefab/"),
-    };
+}
+
+public class HIMSOPath : ScriptableObject
+{
+    public string SO = "SO/";
+    public string PREFAB = "Prefab/";
+    public string GUI = "Prefab/GUI/";
+    public string STAGE = "Prefab/Stage/";
+    public string CAMERA = "Prefab/Camera/";
+    public string ENVIROMENT = "Prefab/Env/";
+    public string EFFECT = "Prefab/Effect/";
+    public string ITEM = "Prefab/Item/";
+    public string SKILL = "Prefab/Skill/";
+    public string ICON = "Src/icon/";
+    public string SCENE = "Src/scene/";
+    public string CHARACTER = "Prefab/Character/";//临时，路径有待规划
+    public string CONFIG = "Config/";
+    public string MAT = "Mat/";
+    public List<string> Key = new List<string>();
+    public List<string> Value = new List<string>();
 }
 [System.Serializable]
 public class HIMPath_
