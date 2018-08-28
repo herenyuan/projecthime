@@ -1,7 +1,0 @@
-ManifestFileVersion: 0
-CRC: 3560316474
-AssetBundleManifest:
-  AssetBundleInfos:
-    Info_0:
-      Name: assets/resources/prefab/ball.prefab
-      Dependencies: {}
