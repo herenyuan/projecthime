@@ -9,6 +9,10 @@ public class HIMSoResource : ScriptableObject
 {
     [HideInInspector]
     public string ABResources = "ABResources";
+    /// <summary>
+    /// 发布后AB的存放文件夹名字
+    /// </summary>
+    public string ExportABFolder = "StreammingAssets";
     [HideInInspector]
     public List<string> key = new List<string>()
     {

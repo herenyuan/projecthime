@@ -15,10 +15,10 @@ using UnityEngine;
 public class HIMABEditorWindow : EditorWindow
 {
     public HIMSoResource src;
+    public HIMEditorConfig config;
     public List<FolderInfo> folderCollection = new List<FolderInfo>();
     List<FileInfo> fileCollection = new List<FileInfo>();
     List<PkgInfo> pkgCollection = new List<PkgInfo>();
-    public int srcOnChoose = 0;
     public DirectoryInfo AssetPath;
     public string ImportFolder = "";
     public bool viewDetail = false;
@@ -48,35 +48,34 @@ public class HIMABEditorWindow : EditorWindow
     Vector2 scrollPosition = Vector2.zero;
     public void Initialization()
     {
-        src = HIMEditorUtility.LoadAsset<HIMSoResource>("Assets/Resources/HIMSoResource.asset");
-        buildTarget = HIMAssetBundleOption.Current;
+        config = HIMEditorUtility.LoadAsset<HIMEditorConfig>(HIMEditorUtility.PathConfig);
+        buildTarget = HIMEditorUtility.BuildType;
+        ImportFolder = HIMEditorUtility.AssetPath + config.ImportABFolder;
 
-        ImportFolder = HIMEditorUtility.AssetPath + src.ABResources;
-        string[] paths = ImportFolder.Split(new char[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries);
-        for (int i = 0; i < paths.Length; i++)
-        {
-            FolderInfo folder = new FolderInfo();
-            folder.root = Application.dataPath;
-
-            folder.name = paths[i].Remove(0, Application.dataPath.Length);
-            folderCollection.Add(folder);
-        }
+        //src = HIMEditorUtility.LoadAsset<HIMSoResource>("Assets/Resources/HIMSoResource.asset");
+        //ImportFolder = HIMEditorUtility.AssetPath + "ABResources"; //src.ABResources;
+        //string[] paths = ImportFolder.Split(new char[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries);
+        //for (int i = 0; i < paths.Length; i++)
+        //{
+        //    FolderInfo folder = new FolderInfo();
+        //    folder.root = Application.dataPath;
+        //    folder.name = paths[i].Remove(0, Application.dataPath.Length);
+        //    folderCollection.Add(folder);
+        //}
     }
 
     private void OnGUI()
     {
-        if (src == null)
-        {
-            EditorGUILayout.LabelField("请完成【基本设置】");
-            return;
-        }
-
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("目标目录：", GUILayout.Width(80));
+        EditorGUILayout.LabelField("目标目录：", GUILayout.Width(60));
+        EditorGUILayout.LabelField(HIMEditorUtility.AssetPath);
+        EditorGUI.BeginDisabledGroup(true);
         GUI.color = Color.green;
-        EditorGUILayout.LabelField(ImportFolder);
+        EditorGUILayout.TextArea(config.ImportABFolder);
         GUI.color = Color.white;
+        EditorGUI.EndDisabledGroup();
         EditorGUILayout.EndHorizontal();
+        
         bool searchBegin = GUILayout.Button("开始搜索");
         if (searchBegin)
         {

@@ -90,7 +90,7 @@ public class Excel2Json
         string json = JsonConvert.SerializeObject(table, Newtonsoft.Json.Formatting.Indented);
         //string json = JsonMapper.ToJson(table);
         //写入文件
-        using (FileStream fileStream = new FileStream(JsonPath, FileMode.Create, FileAccess.Write))
+        using (FileStream fileStream = new FileStream(JsonPath, FileMode.OpenOrCreate, FileAccess.Write))
         {
             using (TextWriter textWriter = new StreamWriter(fileStream, encoding))
             {

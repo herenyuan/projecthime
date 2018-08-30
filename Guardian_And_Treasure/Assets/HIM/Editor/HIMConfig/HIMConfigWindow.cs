@@ -7,24 +7,24 @@ using UnityEngine;
 
 public class HIMConfigWindow : EditorWindow
 {
-    private HIMSoZero zero;
-    private HIMSoResource src;
+    private HIMEditorConfig config;
     public void Initialization()
     {
-        zero = HIMEditorUtility.LoadAsset<HIMSoZero>("Assets/Resources/HIMSoZero.asset");
-        src = HIMEditorUtility.LoadAsset<HIMSoResource>("Assets/Resources/HIMSoResource.asset");
-
+        config = HIMEditorUtility.LoadAsset<HIMEditorConfig>(HIMEditorUtility.PathConfig);
+        if (config != null && config.ExcelFolder.Count == 0)
+        {
+            config.ExcelFolder.Add("");
+        }
     }
     public bool viewPath = true;
     private void OnGUI()
     {
-        if (zero == null)
+        if (config == null)
         {
-            bool createZero = GUILayout.Button("创建本地配置");
-            if(createZero)
+            bool createConfig = GUILayout.Button("开始HIM配置");
+            if (createConfig)
             {
-               
-                if (zero == null) { zero = HIMEditorUtility.Create<HIMSoZero>("Assets/Resources/HIMSoZero.asset"); }
+                config = HIMEditorUtility.Create<HIMEditorConfig>(HIMEditorUtility.PathConfig);
             }
         }
         else
@@ -32,22 +32,10 @@ public class HIMConfigWindow : EditorWindow
             EditorGUILayout.LabelField("[1]基本设置");
             GUILayout.Box("", GUILayout.Height(2), GUILayout.ExpandWidth(true));
             EditorGUILayout.LabelField("目标平台：", HIMAssetBundleOption.Current.ToString());
-            zero.Date = EditorGUILayout.TextField("当前日期：", zero.Date);
-            zero.Version = EditorGUILayout.TextField("版本号：", zero.Version);
+            config.Date = EditorGUILayout.TextField("当前日期：", config.Date);
+            config.Version = EditorGUILayout.TextField("版本号：", config.Version);
             EditorGUILayout.Space();
-        }
 
-        if(src == null)
-        {
-            bool createPath = GUILayout.Button("创建本地配置");
-            if(createPath)
-            {
-                if (src == null) { src = HIMEditorUtility.Create<HIMSoResource>("Assets/Resources/HIMSoResource.asset"); }
-            }
-            
-        }
-        else
-        {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("[2]资源库设置", GUILayout.Width(120));
             viewPath = EditorGUILayout.Toggle("展开详细", viewPath);
@@ -55,28 +43,27 @@ public class HIMConfigWindow : EditorWindow
             GUILayout.Box("", GUILayout.Height(2), GUILayout.ExpandWidth(true));
             if (viewPath)
             {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("根路径：", GUILayout.Width(60));
-                src.ABResources = EditorGUILayout.TextField(src.ABResources);
-                bool check = GUILayout.Button("检测");
+                EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(1000));
+                EditorGUILayout.LabelField(HIMEditorUtility.AssetPath, GUILayout.ExpandWidth(true));
+                EditorGUILayout.TextField(config.ImportABFolder, GUILayout.Width(120));
+                bool check = GUILayout.Button("修复", GUILayout.Width(120));
                 if (check)
                 {
-                    //检测文件夹
-                    HIMEditorUtility.CheckPath(src.ABResources, src.value);
+                    this.Fix(HIMEditorUtility.AssetPath + config.ImportABFolder, config.FolderName);
+                    AssetDatabase.Refresh();
                 }
                 EditorGUILayout.EndHorizontal();
-                for (int i = 0; i < src.key.Count;)
+                for (int i = 0; i < config.FolderName.Count;)
                 {
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField("资源路径：", GUILayout.Width(60));
-                    src.key[i] = EditorGUILayout.TextArea(src.key[i], GUILayout.Width(120));
-                    src.value[i] = EditorGUILayout.TextArea(src.value[i], GUILayout.ExpandWidth(true));
+                    EditorGUILayout.LabelField(HIMEditorUtility.AssetPath + config.ImportABFolder + @"\");
+                    config.FolderName[i] = EditorGUILayout.TextArea(config.FolderName[i], GUILayout.Width(120));
                     GUI.color = Color.red;
                     bool remove = GUILayout.Button("移除[-]", GUILayout.Width(60));
                     GUI.color = Color.white;
                     if (remove)
                     {
-                        src.RemvoeAt(i);
+                        config.FolderName.RemoveAt(i);
                     }
                     else
                     {
@@ -85,17 +72,61 @@ public class HIMConfigWindow : EditorWindow
                     EditorGUILayout.EndHorizontal();
                 }
                 GUI.color = Color.green;
-                bool addNew = GUILayout.Button("新增路径[+]");
+                bool addNew = GUILayout.Button("[+]~新增路径");
                 GUI.color = Color.white;
                 if (addNew)
                 {
-                    src.AddNew();
+                    config.FolderName.Add("");
                 }
             }
             else
             {
-                EditorGUILayout.LabelField(string.Format("以配置 {0} 个资源路径", src.key.Count), GUILayout.Width(120));
+                EditorGUILayout.LabelField(string.Format("以配置 {0} 个资源路径", config.FolderName.Count), GUILayout.Width(120));
             }
+            EditorGUILayout.Space();
+            //导表设置
+            EditorGUILayout.LabelField("[3]配置设置", GUILayout.Width(120));
+            GUILayout.Box("", GUILayout.Height(2), GUILayout.ExpandWidth(true));
+            for (int i = 0; i < config.ExcelFolder.Count;)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(string.Format("配置路径[{0}]：", i), GUILayout.Width(80));
+                config.ExcelFolder[i] = EditorGUILayout.TextArea(config.ExcelFolder[i]);
+                GUI.color = Color.red;
+                bool remove = GUILayout.Button("[-]移除", GUILayout.Width(80));
+                GUI.color = Color.white;
+                if (remove)
+                {
+                    config.ExcelFolder.RemoveAt(i);
+                }
+                else
+                {
+                    i++;
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            GUI.color = Color.green;
+            bool AddPath = GUILayout.Button("[+]~点击这里增加配置路径", GUILayout.ExpandWidth(true));
+            GUI.color = Color.white;
+            if (AddPath)
+            {
+                config.ExcelFolder.Add("");
+            }
+        }
+    }
+
+
+    
+
+
+    public void Fix(string _Path,List<string> _Folders)
+    {
+        if (!Directory.Exists(_Path)) { Directory.CreateDirectory(_Path); }
+        if (!_Path.EndsWith(@"\")) { _Path += @"\"; }
+        for (int i = 0; i < _Folders.Count; i++)
+        {
+            string fullName = _Path + _Folders[i];
+            if (!Directory.Exists(fullName)) { Directory.CreateDirectory(fullName); }
         }
     }
 }

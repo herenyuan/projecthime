@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82967fef07cc70d43b0676e58d9ef642, type: 3}
+  m_Name: HIMEditorConfig
+  m_EditorClassIdentifier: 
+  Date: 
+  Version: 1.0.0.17
+  ImportABFolder: Resources
+  ExportABFolder: StreammingAssets
+  ExcelFolder:
+  - D:\Unity2017\Project2\projecthime\Doc\excel
+  - D:\Unity2017\Project2\projecthime\Doc\excel\client
+  FolderName:
+  - Config
+  - Material
+  - Prefab
+  - Shader
+  - SO
+  - Sound
+  - Sprite
+  - Texture
+  - Txt

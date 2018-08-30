@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class HIMEditor
 {
-    [MenuItem("游戏设计器/基本设置")]
+    [MenuItem("游戏设计器/HIM配置")]
     public static void Tool0()
     {
         HIMConfigWindow win = EditorWindow.GetWindow<HIMConfigWindow>("工程设置");
@@ -32,11 +32,27 @@ public class HIMEditor
 
 public class HIMEditorUtility
 {
+    public static readonly string PathConfig = "Assets/HIM/Editor/HIMEditorConfig.asset";
+    public static BuildTarget BuildType
+    {
+        get
+        {
+#if UNITY_ANDROID
+            return BuildTarget.Android;
+#elif UNITY_STANDALONE_WIN
+            return BuildTarget.StandaloneWindows;
+#elif UNITY_IOS
+            return BuildTarget.iOS;
+#endif
+        }
+    }
     /// <summary>
     /// 工程目录
     /// </summary>
-    public static string ProjectPath = System.Environment.CurrentDirectory + "/";
-    public static string AssetPath = System.Environment.CurrentDirectory + "/Assets/";
+    public static string ProjectPath = System.Environment.CurrentDirectory + @"\";
+    public static string AssetPath = System.Environment.CurrentDirectory + @"\Assets\";
+    public static string ResPath = System.Environment.CurrentDirectory + @"\Assets\Resources\";
+    public static string ImportABFolder = "ABResources";
     public static T Create<T>(string _localPath, string assetName) where T : ScriptableObject
     {
         string fileName = string.Format(_localPath, assetName);

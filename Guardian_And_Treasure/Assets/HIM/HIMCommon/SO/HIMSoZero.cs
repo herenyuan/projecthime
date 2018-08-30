@@ -11,6 +11,9 @@ public class HIMSoZero : ScriptableObject {
 
     public string Date = "";
     public string Version = "1.0.0.17";
-
-    
+    /// <summary>
+    /// 发布后AB的存放文件夹名字
+    /// </summary>
+    public string ExportABFolder = "StreammingAssets";
+    public List<string> FolderName = new List<string>();
 }
