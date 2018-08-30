@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// AB -----> 打包窗口
+/// AB -----> 打包窗口【暂不支持场景文件打包】
 /// 资源目录整体打包
 /// 采用资源分类式打包，包间存在依赖关系
 /// 目标文件夹的子目录第一层为包名，之后为资源内容
@@ -14,9 +14,7 @@ using UnityEngine;
 /// </summary>
 public class HIMABEditorWindow : EditorWindow
 {
-    public HIMSOProject projectData;
-    public UnityEngine.Object[] selected;
-    public string pathAssets = "";
+    public HIMSoResource src;
     public List<FolderInfo> folderCollection = new List<FolderInfo>();
     List<FileInfo> fileCollection = new List<FileInfo>();
     List<PkgInfo> pkgCollection = new List<PkgInfo>();
@@ -28,10 +26,6 @@ public class HIMABEditorWindow : EditorWindow
 
     private BuildTarget buildTarget = BuildTarget.Android;
 
-    public List<System.Type> SelectType = new List<System.Type>()
-    {
-        typeof(UnityEditor.DefaultAsset),
-    };
     public List<string> filterExName = new List<string>()
     {
         ".meta",
@@ -47,15 +41,17 @@ public class HIMABEditorWindow : EditorWindow
         ".config",
         ".sh",
         ".scc",
-        ".BAT"
+        ".BAT",
+        ".unity"
     };
 
     Vector2 scrollPosition = Vector2.zero;
     public void Initialization()
     {
+        src = HIMEditorUtility.LoadAsset<HIMSoResource>("Assets/Resources/HIMSoResource.asset");
         buildTarget = HIMAssetBundleOption.Current;
-        pathAssets = Application.dataPath;
-        ImportFolder = PlayerPrefs.GetString("ImportFolder");
+
+        ImportFolder = HIMEditorUtility.AssetPath + src.ABResources;
         string[] paths = ImportFolder.Split(new char[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries);
         for (int i = 0; i < paths.Length; i++)
         {
@@ -69,65 +65,24 @@ public class HIMABEditorWindow : EditorWindow
 
     private void OnGUI()
     {
-        SelectedObject = Selection.objects;
-        for (int i = 0; i < SelectedObject.Length; i++)
+        if (src == null)
         {
-            EditorGUILayout.LabelField(AssetDatabase.GetAssetPath(SelectedObject[i]));
+            EditorGUILayout.LabelField("请完成【基本设置】");
+            return;
         }
 
         EditorGUILayout.BeginHorizontal();
-
-        bool refreshFolder = GUILayout.Button("刷新资源目录", GUILayout.ExpandWidth(true));
-        if (refreshFolder)
-        {
-            folderCollection.Clear();
-            //刷新工程文件夹
-            AssetPath = new DirectoryInfo(Application.dataPath);
-            DirectoryInfo[] dis = AssetPath.GetDirectories();
-            for (int i = 0; i < dis.Length; i++)
-            {
-                FolderInfo folder = new FolderInfo();
-                folder.root = Application.dataPath;
-                folder.name = dis[i].FullName.Remove(0, Application.dataPath.Length);
-                folder.name = folder.name.Replace(@"\", "/");
-                folderCollection.Add(folder);
-            }
-        }
-
+        EditorGUILayout.LabelField("目标目录：", GUILayout.Width(80));
+        GUI.color = Color.green;
+        EditorGUILayout.LabelField(ImportFolder);
+        GUI.color = Color.white;
         EditorGUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginVertical();
-        for (int i = 0; i < folderCollection.Count;)
+        bool searchBegin = GUILayout.Button("开始搜索");
+        if (searchBegin)
         {
-            EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
-
-            EditorGUILayout.LabelField(string.Format("目录[{0}]", i), GUILayout.Width(50));
-            EditorGUILayout.LabelField(folderCollection[i].root, GUILayout.ExpandWidth(true));
-            GUI.color = Color.green;
-            EditorGUILayout.LabelField(folderCollection[i].name, GUILayout.ExpandWidth(true));
-            GUI.color = Color.white;
-            bool remove = GUILayout.Button("移除", GUILayout.Width(250));
-            if (remove)
-            {
-                folderCollection.RemoveAt(i);
-            }
-            else
-            {
-                i++;
-            }
-            EditorGUILayout.EndHorizontal();
-        }
-        EditorGUILayout.EndVertical();
-        if (folderCollection.Count > 0)
-        {
-            bool searchBegin = GUILayout.Button("开始搜索");
-            if (searchBegin)
-            {
-                fileCollection.Clear();
-                this.Search();
-                this.Filter();
-                this.SaveFolder();
-            }
+            fileCollection.Clear();
+            this.Search();
+            this.Filter();
         }
         if (fileCollection.Count > 0)
         {
@@ -137,16 +92,11 @@ public class HIMABEditorWindow : EditorWindow
     }
     private void Search()
     {
-        for (int i = 0; i < folderCollection.Count; i++)
+        DirectoryInfo di = new DirectoryInfo(ImportFolder);
+        if(di.Exists)
         {
-            FolderInfo folder = folderCollection[i];
-            if (Directory.Exists(folder.FullName))
-            {
-                DirectoryInfo di = new DirectoryInfo(folder.FullName);
-                this.SearchProcess(di);
-            }
+            this.SearchProcess(di);
         }
-
     }
     void SearchProcess(DirectoryInfo root)
     {
@@ -184,18 +134,6 @@ public class HIMABEditorWindow : EditorWindow
             {
                 i++;
             }
-        }
-    }
-    void SaveFolder()
-    {
-        ImportFolder = "";
-        for (int i = 0; i < folderCollection.Count; i++)
-        {
-            ImportFolder += folderCollection[i].FullName + ";";
-        }
-        if (!string.IsNullOrEmpty(ImportFolder))
-        {
-            PlayerPrefs.SetString("ImportFolder", ImportFolder);
         }
     }
     void ViewFileDetail()
@@ -238,15 +176,15 @@ public class HIMABEditorWindow : EditorWindow
             {
                 PkgInfo pkg = new PkgInfo();
                 FileInfo fi = fileCollection[i];
-                
-                pkg.assetName = "Assets" + fi.FullName.Remove(0, Application.dataPath.Length);
+                pkg.assetName = fi.FullName.Remove(0, HIMEditorUtility.ProjectPath.Length);
                 pkg.assetName = pkg.assetName.Replace(@"\", "/");
-                string saveName = fi.FullName.Remove(0, Application.dataPath.Length + 1);
+                string abResources = HIMEditorUtility.AssetPath + src.ABResources+"/";
+                string saveName = fi.FullName.Remove(0, abResources.Length);
+                saveName = saveName.Replace(@"\","_");
                 pkg.outputName = saveName;
-                Debug.Log(pkg.outputName);
                 pkgCollection.Add(pkg);
             }
-            string output = Application.dataPath + "/StreamingAssets/" + buildTarget.ToString() + "/";
+            string output = HIMEditorUtility.ProjectPath + src.ABResources+"/" + buildTarget.ToString() + "/";
             AssetBundleBuild[] builds = new AssetBundleBuild[pkgCollection.Count];
             for (int i = 0; i < pkgCollection.Count; i++)
             {
@@ -261,6 +199,7 @@ public class HIMABEditorWindow : EditorWindow
                 build.assetBundleName = pkgCollection[i].outputName;
                 builds[i] = build;
             }
+            
             if (!Directory.Exists(output)) { Directory.CreateDirectory(output); }
             BuildPipeline.BuildAssetBundles(output, builds, BuildAssetBundleOptions.None, HIMAssetBundleOption.Current);
             AssetDatabase.Refresh();

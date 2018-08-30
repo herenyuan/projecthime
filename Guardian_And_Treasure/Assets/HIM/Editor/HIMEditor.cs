@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class HIMEditor
     [MenuItem("游戏设计器/基本设置")]
     public static void Tool0()
     {
-        HIMProjectSettingWindow win = EditorWindow.GetWindow<HIMProjectSettingWindow>("工程设置");
+        HIMConfigWindow win = EditorWindow.GetWindow<HIMConfigWindow>("工程设置");
         win.Initialization();
         win.Show();
     }
@@ -26,5 +27,61 @@ public class HIMEditor
         HIMABEditorWindow win = EditorWindow.GetWindow<HIMABEditorWindow>("资源打包工具");
         win.Initialization();
         win.Show();
+    }
+}
+
+public class HIMEditorUtility
+{
+    /// <summary>
+    /// 工程目录
+    /// </summary>
+    public static string ProjectPath = System.Environment.CurrentDirectory + "/";
+    public static string AssetPath = System.Environment.CurrentDirectory + "/Assets/";
+    public static T Create<T>(string _localPath, string assetName) where T : ScriptableObject
+    {
+        string fileName = string.Format(_localPath, assetName);
+        string fullName = Path.Combine(ProjectPath, fileName);
+        string assetSavePath = string.Format(_localPath, assetName);
+        Object data = ScriptableObject.CreateInstance<T>();
+        FileInfo fi = new FileInfo(fullName);
+        if (!fi.Directory.Exists) { fi.Directory.Create(); }
+        AssetDatabase.CreateAsset(data, assetSavePath);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+
+        return (T)data;
+    }
+    public static T Create<T>(string assetName) where T : ScriptableObject
+    {
+        string fullName = Path.Combine(ProjectPath, assetName);
+        Object data = ScriptableObject.CreateInstance<T>();
+        FileInfo fi = new FileInfo(fullName);
+        if (!fi.Directory.Exists) { fi.Directory.Create(); }
+        AssetDatabase.CreateAsset(data, assetName);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+
+        return (T)data;
+    }
+    public static T LoadAsset<T>(string assetPath, string assetName) where T : ScriptableObject
+    {
+        string assetFullName = string.Format(assetPath, assetName);
+        return AssetDatabase.LoadAssetAtPath<T>(assetFullName);
+    }
+    public static T LoadAsset<T>(string assetName) where T : ScriptableObject
+    {
+        return AssetDatabase.LoadAssetAtPath<T>(assetName);
+    }
+
+
+    public static void CheckPath(string mainFolder, List<string> subfolders)
+    {
+        string root = AssetPath + mainFolder;
+        if (!Directory.Exists(root)) { Directory.CreateDirectory(root); }
+        for (int i = 0; i < subfolders.Count; i++)
+        {
+            string sub = root + "/" + subfolders[i];
+            if (!Directory.Exists(sub)) { Directory.CreateDirectory(sub); }
+        }
     }
 }
