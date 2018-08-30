@@ -1,0 +1,27 @@
+﻿[
+  {
+    "id": 1,
+    "hero_cd": 1000,
+    "npc_hero_delay": 4000,
+    "npc_skill_delay": 2000,
+    "skill_cd": 4000,
+    "energy1": 40,
+    "energy2": 1,
+    "energy3": 10,
+    "time": 10000,
+    "recovery_anger": 10,
+    "max_energy": 120,
+    "map_size1": 60,
+    "map_size2": 10,
+    "map_size3": 30,
+    "parameter1": 3,
+    "parameter2": 3,
+    "parameter3": 3,
+    "parameter4": 1,
+    "businessNum": 20,
+    "refreshNum": 5,
+    "basicsReward2": "1,1000",
+    "basicsReward3": "1,1000",
+    "basicsReward4": "1,1000"
+  }
+]

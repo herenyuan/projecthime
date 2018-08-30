@@ -1,0 +1,38 @@
+﻿[
+  {
+    "id": 101,
+    "des": "默认开启",
+    "Close": 0.0,
+    "Hideday": 0,
+    "level": 1,
+    "copy_id": 0,
+    "prestige_num": 0,
+    "task_id": 0,
+    "day_num": 0,
+    "hero_id": 0
+  },
+  {
+    "id": 102,
+    "des": "队长10级开启",
+    "Close": 0.0,
+    "Hideday": 0,
+    "level": 10,
+    "copy_id": 0,
+    "prestige_num": 0,
+    "task_id": 0,
+    "day_num": 0,
+    "hero_id": 0
+  },
+  {
+    "id": 103,
+    "des": "队长10级开启",
+    "Close": 0.0,
+    "Hideday": 0,
+    "level": 1,
+    "copy_id": 0,
+    "prestige_num": 0,
+    "task_id": 0,
+    "day_num": 0,
+    "hero_id": 0
+  }
+]
