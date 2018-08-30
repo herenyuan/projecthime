@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a64e5b0e436d4bed9780211ae245f7b, type: 3}
+  m_Name: Skill_Stun_Data
+  m_EditorClassIdentifier: 
+  dataName: Skill_Stun
+  dragonBonesJSON: {fileID: 4900000, guid: 3c8d88a41ecc5994aaf82e940a038e0d, type: 3}
+  textureAtlas:
+  - textureAtlasJSON: {fileID: 4900000, guid: 6d91f7a9a513331429022894c71e313a, type: 3}
+    texture: {fileID: 2800000, guid: 8e2bd48ceaa65d74e8f09586761284f9, type: 3}
+    material: {fileID: 2100000, guid: b109a84dcad9a0e4a9867bc435e6ebc9, type: 2}
+    uiMaterial: {fileID: 2100000, guid: af80c5679907c544c808969f76525011, type: 2}
