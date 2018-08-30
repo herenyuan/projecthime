@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class HIMEditor
 {
+    static EditorWindow Current;
     [MenuItem("游戏设计器/HIM配置")]
     public static void Tool0()
     {
+        
         HIMConfigWindow win = EditorWindow.GetWindow<HIMConfigWindow>("工程设置");
         win.Initialization();
-        win.Show();
+        Show(win);
     }
 
     [MenuItem("游戏设计器/导表工具")]
@@ -19,14 +21,23 @@ public class HIMEditor
     {
         WINExcelToJson win = EditorWindow.GetWindow<WINExcelToJson>("导表工具");
         win.Initialization();
-        win.Show();
+        Show(win);
     }
     [MenuItem("游戏设计器/资源打包工具")]
     public static void Tool2()
     {
         HIMABEditorWindow win = EditorWindow.GetWindow<HIMABEditorWindow>("资源打包工具");
         win.Initialization();
-        win.Show();
+        Show(win);
+    }
+    static void Show(EditorWindow target)
+    {
+        if (Current != null && !Current.Equals(target))
+        {
+            Current.Close();
+        }
+        Current = target;
+        Current.Show();
     }
 }
 

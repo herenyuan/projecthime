@@ -9,9 +9,13 @@ public class HIMEditorConfig : ScriptableObject {
 
     public string Date = "";
     public string Version = "1.0.0.17";
+
     public string ImportABFolder = "Resources";
-    public string ExportABFolder = "StreammingAssets";
     public string ExportJsonFolder = "Config";
+
+
+    public string ExportABFolder = "StreammingAssets";
+
     public List<string> ExcelFolder = new List<string>();
     public List<string> FolderName = new List<string>()
     {
@@ -19,7 +23,7 @@ public class HIMEditorConfig : ScriptableObject {
         "Material",
         "Prefab",
         "Shader",
-        "SO",
+        "Other",
         "Sound",
         "Sprite",
         "Texture",

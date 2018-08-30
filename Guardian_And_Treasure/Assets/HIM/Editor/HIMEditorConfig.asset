@@ -15,15 +15,14 @@ MonoBehaviour:
   Version: 1.0.0.17
   ImportABFolder: Resources
   ExportABFolder: StreammingAssets
-  ExcelFolder:
-  - D:\Unity2017\Project2\projecthime\Doc\excel
-  - D:\Unity2017\Project2\projecthime\Doc\excel\client
+  ExportJsonFolder: Config
+  ExcelFolder: []
   FolderName:
   - Config
   - Material
   - Prefab
   - Shader
-  - SO
+  - Other
   - Sound
   - Sprite
   - Texture

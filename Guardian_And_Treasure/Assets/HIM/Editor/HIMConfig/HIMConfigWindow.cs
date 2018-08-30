@@ -31,7 +31,7 @@ public class HIMConfigWindow : EditorWindow
         {
             EditorGUILayout.LabelField("[1]基本设置");
             GUILayout.Box("", GUILayout.Height(2), GUILayout.ExpandWidth(true));
-            EditorGUILayout.LabelField("目标平台：", HIMAssetBundleOption.Current.ToString());
+            EditorGUILayout.LabelField("目标平台：", HIMEditorUtility.BuildType.ToString());
             config.Date = EditorGUILayout.TextField("当前日期：", config.Date);
             config.Version = EditorGUILayout.TextField("版本号：", config.Version);
             EditorGUILayout.Space();
@@ -45,7 +45,7 @@ public class HIMConfigWindow : EditorWindow
             {
                 EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(1000));
                 EditorGUILayout.LabelField(HIMEditorUtility.AssetPath, GUILayout.ExpandWidth(true));
-                EditorGUILayout.TextField(config.ImportABFolder, GUILayout.Width(120));
+                config.ImportABFolder = EditorGUILayout.TextField(config.ImportABFolder, GUILayout.Width(120));
                 bool check = GUILayout.Button("修复", GUILayout.Width(120));
                 if (check)
                 {
@@ -74,6 +74,7 @@ public class HIMConfigWindow : EditorWindow
                 GUI.color = Color.green;
                 bool addNew = GUILayout.Button("[+]~新增路径");
                 GUI.color = Color.white;
+                EditorGUILayout.TextField(config.ExportABFolder);
                 if (addNew)
                 {
                     config.FolderName.Add("");
