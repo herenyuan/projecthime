@@ -40,9 +40,9 @@ public class HIMABEditorWindow : EditorWindow
     Vector2 scrollPosition = Vector2.zero;
     public void Initialization()
     {
-        ImportFolder = HIMEditorUtility.AssetPath + HIMEditorUtility.EdtConfig.ImportABFolder;
+        //ImportFolder = HIMEditorUtility.AssetPath + HIMEditorUtility.EdtConfig.ImportABFolder;
         ImportFolder = HIMEditorUtility.ImportPath;
-        ExportFolder = HIMEditorUtility.ProjectPath + HIMEditorUtility.EdtConfig.ExportABFolder + @"\" + HIMEditorUtility.BuildType.ToString() + @"\";
+        //ExportFolder = HIMEditorUtility.ProjectPath + HIMEditorUtility.EdtConfig.ExportABFolder + @"\" + HIMEditorUtility.BuildType.ToString() + @"\";
         ExportFolder = HIMEditorUtility.ExportPath;
     }
 
@@ -174,7 +174,7 @@ public class HIMABEditorWindow : EditorWindow
                     info.rootPath,
                 };
                 build.assetNames = assetPaths;
-                build.assetBundleName = info.srcPath.Replace(@"\", "_");
+                build.assetBundleName = info.srcPath;
                 builds[i] = build;
             }
             if (!Directory.Exists(ExportFolder)) { Directory.CreateDirectory(ExportFolder); }

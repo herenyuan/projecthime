@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1642303008
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 33361ef454312bc36324abf59e447b70
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/MP3/battle_win.mp3
+Dependencies: []

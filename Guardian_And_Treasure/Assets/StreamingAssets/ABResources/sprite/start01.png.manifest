@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2636175374
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ef8311ef9a4a2873365dc277ff6575b5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 460b4f5d62b6facbccf7c01637df8f00
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Sprite/start01.png
+Dependencies: []

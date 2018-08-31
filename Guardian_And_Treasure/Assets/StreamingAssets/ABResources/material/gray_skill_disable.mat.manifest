@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 91006259
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0316868591e0baea97e416f2acf26297
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c2bdabd68c118aabc18c59eaf5951821
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Material/gray_skill_disable.mat
+Dependencies: []

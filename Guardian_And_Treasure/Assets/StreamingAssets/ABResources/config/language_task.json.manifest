@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1091097561
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 13cb619d435a09e249b2ce5c20672112
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Config/Language_Task.json
+Dependencies: []

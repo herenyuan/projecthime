@@ -1,0 +1,94 @@
+ManifestFileVersion: 0
+CRC: 3910399809
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 57650295008d638e0b27956f3458ac34
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: dd60cf51cc08b1a2521c16779c15e79e
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6fcb9c67282c516479634b8a100b241e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 413b3eb3a9d13224e8f3630367386fab, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0649a4b64d5ebc346b48a6ba912c874e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e5247e03c1e4534489ce57142b780fdb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f3b9d4ef0598604448b900ec5adb5fa2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2d03ad5b2215ef14fa57362ad0e2b974, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8466e9b7f1cfd574680e1edd9d500591, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e5f04044328296c4a85218a952ed6d2e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9f47d4c77033a9d47984e72922a01c6a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4a3e8f66bb7d4914bb2c593c7e7ae7d2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d6a96e309eac5de4e8f0fe4c5c8bac61, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c8e5499f991bed9468c0fcf55cc1d93c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d2dc49fcbc3692141b606c3edfab095e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: bead36d1ac2446c469d8cfee69467ab6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 547cae0a932e9904aa8d530d4179872f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9e5f7b8676278e3499d3f63f09768589, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f6bc4c8c289517441aff7b606db094e7, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Prefab/HUD1.prefab
+Dependencies:
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon10004.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon10005.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon20002.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon20006.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon90001.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon90001a.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon90004a.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon90006.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon90008.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/none.jpg

@@ -17,7 +17,7 @@ public class Test2 : MonoBehaviour {
         //Debug.Log(Application.buildGUID);
         txt.text = str;
         //HIM.Online();
-        //HIMResources.Ins.Online();
+        HIMResources.Ins.Online();
     }
 
     // Update is called once per frame

@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 166231992
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 23b1d45a437643212fa0f6b4e9df99bb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d08803c862fb5aa3e465ffb1a608eddb
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 5ab114099c6b5c1468793aa684416908, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Zero.asset
+Dependencies: []

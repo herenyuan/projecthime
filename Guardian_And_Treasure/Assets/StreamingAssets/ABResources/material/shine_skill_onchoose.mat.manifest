@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3130178236
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: dd530f4f25b55ba2b241f023cce9fe5c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c2bdabd68c118aabc18c59eaf5951821
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Material/shine_skill_onchoose.mat
+Dependencies: []

@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 35193920
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: df7d625a9140718b8d22001a9522830f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Config/Leadlevel.json
+Dependencies: []
