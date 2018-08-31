@@ -7,26 +7,9 @@ using UnityEngine;
 /// </summary>
 public class HIMEditorConfig : ScriptableObject {
 
-    public string Date = "";
-    public string Version = "1.0.0.17";
-
+    public string ZeroPathFormation = @"Assets\{0}\Zero.asset";
     public string ImportABFolder = "Resources";
     public string ExportJsonFolder = "Config";
-
-
-    public string ExportABFolder = "StreammingAssets";
-
+    public string ExportABFolder = "ABResources";
     public List<string> ExcelFolder = new List<string>();
-    public List<string> FolderName = new List<string>()
-    {
-        "Config",
-        "Material",
-        "Prefab",
-        "Shader",
-        "Other",
-        "Sound",
-        "Sprite",
-        "Texture",
-        "Txt",
-    };
 }

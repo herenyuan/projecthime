@@ -14,7 +14,6 @@ using UnityEngine;
 /// </summary>
 public class HIMABEditorWindow : EditorWindow
 {
-    public HIMEditorConfig config;
     List<AssetInfo> assetCollection = new List<AssetInfo>();
     public string ImportFolder = "";
     public string ExportFolder = "";
@@ -41,24 +40,20 @@ public class HIMABEditorWindow : EditorWindow
     Vector2 scrollPosition = Vector2.zero;
     public void Initialization()
     {
-        config = HIMEditorUtility.LoadAsset<HIMEditorConfig>(HIMEditorUtility.PathConfig);
-        if (config != null)
-        {
-            ImportFolder = HIMEditorUtility.AssetPath + config.ImportABFolder;
-            ExportFolder = HIMEditorUtility.ProjectPath + config.ExportABFolder + @"\" + HIMEditorUtility.BuildType.ToString() + @"\";
-        }
-        
+        ImportFolder = HIMEditorUtility.AssetPath + HIMEditorUtility.EdtConfig.ImportABFolder;
+        ImportFolder = HIMEditorUtility.ImportPath;
+        ExportFolder = HIMEditorUtility.ProjectPath + HIMEditorUtility.EdtConfig.ExportABFolder + @"\" + HIMEditorUtility.BuildType.ToString() + @"\";
+        ExportFolder = HIMEditorUtility.ExportPath;
     }
 
     private void OnGUI()
     {
-        if (config == null) { return; }
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("目标目录：", GUILayout.Width(60));
         EditorGUILayout.LabelField(HIMEditorUtility.AssetPath);
         EditorGUI.BeginDisabledGroup(true);
         GUI.color = Color.green;
-        EditorGUILayout.TextArea(config.ImportABFolder);
+        EditorGUILayout.TextArea(HIMEditorUtility.EdtConfig.ImportABFolder);
         GUI.color = Color.white;
         EditorGUI.EndDisabledGroup();
         EditorGUILayout.EndHorizontal();

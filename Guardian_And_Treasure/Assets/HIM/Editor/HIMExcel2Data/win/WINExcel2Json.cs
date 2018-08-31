@@ -35,98 +35,98 @@ public class WINExcelToJson : EditorWindow
     public List<string> TotalPath;
     public HIMSoResource src;
 
-    public HIMEditorConfig config;
-
     public void Initialization()
     {
-        config = HIMEditorUtility.LoadAsset<HIMEditorConfig>(HIMEditorUtility.PathConfig);
+
     }
     public void OnGUI()
     {
-        if (config != null)
+        if(HIMEditorUtility.EdtConfig.ExcelFolder.Count == 0)
         {
+            GUI.color = Color.red;
+            EditorGUILayout.LabelField("请在HIM设置中添加配置路径.....");
+            return;
+        }
+        GUILayout.BeginHorizontal();
+        GUILayout.BeginVertical();
+
+        EditorGUI.BeginDisabledGroup(true);
+        for (int i = 0; i < HIMEditorUtility.EdtConfig.ExcelFolder.Count; i++)
+        {
+            EditorGUILayout.TextField(HIMEditorUtility.EdtConfig.ExcelFolder[i]);
+        }
+        EditorGUI.EndDisabledGroup();
+
+        GUI.color = Color.green;
+        bool import = GUILayout.Button("导入配置", GUILayout.ExpandWidth(true));
+        GUI.color = Color.white;
+
+        GUILayout.EndVertical();
+
+        if (import)
+        {
+            this.SearchExcel();
+        }
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginVertical();
+        //获取所有路径
+        if (TotalPath != null)
+        {
+            for (int i = 0; i < TotalPath.Count; i++)
+            {
+                EditorGUILayout.LabelField(TotalPath[i]);
+            }
+
             GUILayout.BeginHorizontal();
-            GUILayout.BeginVertical();
-
-            EditorGUI.BeginDisabledGroup(true);
-            for (int i = 0; i < config.ExcelFolder.Count; i++)
-            {
-                EditorGUILayout.TextField(config.ExcelFolder[i]);
-            }
-            EditorGUI.EndDisabledGroup();
-
-            GUI.color = Color.green;
-            bool import = GUILayout.Button("导入配置", GUILayout.ExpandWidth(true));
-            GUI.color = Color.white;
-
-            GUILayout.EndVertical();
-
-            if (import)
-            {
-                this.SearchExcel();
-            }
+            EditorGUILayout.LabelField("请选择格式类型:", GUILayout.Width(85));
+            indexOfFormat = EditorGUILayout.Popup(indexOfFormat, formatOption, GUILayout.Width(125));
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginVertical();
-            //获取所有路径
-            if (TotalPath != null)
+            GUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("请选择编码类型:", GUILayout.Width(85));
+            indexOfEncoding = EditorGUILayout.Popup(indexOfEncoding, encodingOption, GUILayout.Width(125));
+            GUILayout.EndHorizontal();
+
+            bool convert = GUILayout.Button("转换");
+            if (convert)
             {
+                //转换到json
                 for (int i = 0; i < TotalPath.Count; i++)
                 {
-                    EditorGUILayout.LabelField(TotalPath[i]);
+                    string fullName = TotalPath[i];
+                    string name = "";
+                    DataSet dataSet = this.Try(fullName, out name);
+                    string folderName = HIMEditorUtility.ResPath + HIMEditorUtility.EdtConfig.ExportJsonFolder;
+                    if (!Directory.Exists(folderName)) { Directory.CreateDirectory(folderName); }
+                    string fileName = HIMEditorUtility.ResPath + HIMEditorUtility.EdtConfig.ExportJsonFolder + @"\" + name;
+                    Debug.Log("output: " + fileName);
+                    fileName = fileName.Replace(".xlsx", ".json");
+                    Excel2Json.Convert(fileName, dataSet, Encoding.GetEncoding("utf-8"));
                 }
-
-                GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("请选择格式类型:", GUILayout.Width(85));
-                indexOfFormat = EditorGUILayout.Popup(indexOfFormat, formatOption, GUILayout.Width(125));
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("请选择编码类型:", GUILayout.Width(85));
-                indexOfEncoding = EditorGUILayout.Popup(indexOfEncoding, encodingOption, GUILayout.Width(125));
-                GUILayout.EndHorizontal();
-
-                bool convert = GUILayout.Button("转换");
-                if (convert)
-                {
-                    //转换到json
-                    for (int i = 0; i < TotalPath.Count; i++)
-                    {
-                        string fullName = TotalPath[i];
-                        string name = "";
-                        DataSet dataSet = this.Try(fullName, out name);
-                        string folderName = HIMEditorUtility.ResPath + config.ExportJsonFolder;
-                        if (!Directory.Exists(folderName)) { Directory.CreateDirectory(folderName); }
-                        string fileName = HIMEditorUtility.ResPath + config.ExportJsonFolder + @"\" + name;
-                        Debug.Log("output: " + fileName);
-                        fileName = fileName.Replace(".xlsx", ".json");
-                        Excel2Json.Convert(fileName, dataSet, Encoding.GetEncoding("utf-8"));
-                    }
-                    AssetDatabase.Refresh();
-                }
+                AssetDatabase.Refresh();
             }
-            GUILayout.EndVertical();
         }
+        GUILayout.EndVertical();
     }
     void SearchExcel()
     {
-      
         TotalPath = new List<string>();
-        for (int i = 0; i < config.ExcelFolder.Count; i++)
+        for (int i = 0; i < HIMEditorUtility.EdtConfig.ExcelFolder.Count; i++)
         {
-            if (this.CheckPath(config.ExcelFolder[i]))
+            if (this.CheckPath(HIMEditorUtility.EdtConfig.ExcelFolder[i]))
             {
-                string []path = Directory.GetFiles(config.ExcelFolder[i]);
+                string[] path = Directory.GetFiles(HIMEditorUtility.EdtConfig.ExcelFolder[i]);
                 List<string> temp = new List<string>(path);
                 TotalPath.AddRange(temp);
             }
             else
             {
-                Debug.LogError("请填写正确的文件路径: " + config.ExcelFolder[i]);
+                Debug.LogError("请填写正确的文件路径: " + HIMEditorUtility.EdtConfig.ExcelFolder[i]);
             }
         }
-        
-        
+
+
     }
     public bool CheckPath(string path)
     {

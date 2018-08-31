@@ -10,10 +10,14 @@ using UnityEngine;
 public class HIMResources : SingleMono<HIMResources>
 {
     public Action<string> onErrorCallBack;
+    public HIMZeroConfig zero;
     public AssetBundle MainBundle;
     private AssetBundleManifest Manifest { get; set; }
     public void Online()
     {
+
+        //读取特定路径下的的AB资源Zero.asset
+        string PathABResources = Application.persistentDataPath;
         MainBundle = AssetBundle.LoadFromFile(HIMPath.total + "StandaloneWindows");
         if (MainBundle == null && onErrorCallBack != null) { onErrorCallBack.Invoke("MainBundle load error"); }
         Manifest = MainBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");

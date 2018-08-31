@@ -43,7 +43,42 @@ public class HIMEditor
 
 public class HIMEditorUtility
 {
-    public static readonly string PathConfig = "Assets/HIM/Editor/HIMEditorConfig.asset";
+    private static HIMEditorConfig m_EdtConfig;
+    public static HIMEditorConfig EdtConfig
+    {
+        get
+        {
+            if(m_EdtConfig == null)
+            {
+                m_EdtConfig = LoadAsset<HIMEditorConfig>("Assets/HIM/Editor/HIMEditorConfig.asset");
+                if(m_EdtConfig == null)
+                {
+                    m_EdtConfig = Create<HIMEditorConfig>("Assets/HIM/Editor/HIMEditorConfig.asset");
+                }
+            }
+            return m_EdtConfig;
+        }
+    }
+    private static HIMZeroConfig m_ZroConfig;
+    public static HIMZeroConfig ZroConfig
+    {
+        get
+        {
+            if (m_ZroConfig == null)
+            {
+                m_ZroConfig = LoadAsset<HIMZeroConfig>("Assets/Resources/Zero.asset");
+                if (m_ZroConfig == null)
+                {
+                    m_ZroConfig = Create<HIMZeroConfig>("Assets/Resources/Zero.asset");
+                }
+            }
+            return m_ZroConfig;
+        }
+    }
+
+    
+    
+
     public static BuildTarget BuildType
     {
         get
@@ -63,7 +98,10 @@ public class HIMEditorUtility
     public static string ProjectPath = System.Environment.CurrentDirectory + @"\";
     public static string AssetPath = System.Environment.CurrentDirectory + @"\Assets\";
     public static string ResPath = System.Environment.CurrentDirectory + @"\Assets\Resources\";
-    public static string ImportABFolder = "ABResources";
+    public static string PathResources = System.Environment.CurrentDirectory + @"\Assets\Resources\";
+    public static string ImportPath = System.Environment.CurrentDirectory+ @"\Assets\Resources\";
+    public static string ExportPath = System.Environment.CurrentDirectory + @"\ABResources\";
+
     public static T Create<T>(string _localPath, string assetName) where T : ScriptableObject
     {
         string fileName = string.Format(_localPath, assetName);
