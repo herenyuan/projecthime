@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -9,33 +11,57 @@ using UnityEngine;
 /// </summary>
 public class HIMResources : SingleMono<HIMResources>
 {
+    public readonly string abResources = "ABResources";
+    public readonly string zeroConfig = "Zero.asset";
+    public readonly string manifestName = "AssetBundleManifest";
     public Action<string> onErrorCallBack;
-    public HIMZeroConfig zero;
     private AssetBundleManifest Manifest { get; set; }
 
-    public Dictionary<string, string> Entries = new Dictionary<string, string>();
+    public Dictionary<string, string> Entries { get; set; }
     public Dictionary<string, AssetBundle> Bundles = new Dictionary<string, AssetBundle>();
     public Dictionary<string, string[]> BundleDependence = new Dictionary<string, string[]>();
+    private AssetBundle mainBundle;
+    private AssetBundle zeroBundle;
 
-    public string SrcPath = "";
-
+    public bool Ready
+    {
+        get
+        {
+            return mainBundle != null && zeroBundle != null;
+        }
+    }
     public void Online()
     {
-        SrcPath = Application.streamingAssetsPath + @"\ABResources\";
-        AssetBundle main = this.LoadFromFile("", "ABResources", ""); //加载AB信息，包含依赖和索引信息
-        AssetBundle zero = this.LoadFromFile("", "Zero.asset", ""); //加载0号配置
-        this.BuildDependence(main);
-        this.BuildEntries(zero);
+        this.LoadMain();
+        this.LoadZero();
+        this.BuildDependence();
+        this.BuildEntries();
+
+        //this.LoadPrefab("ball");
+        this.LoadPrefab("Prefab","ball");
+        this.LoadPrefab("Prefab/GUI", "ball2");
+        int a = 0;
     }
-    void BuildDependence(AssetBundle _ABResources)
+    void LoadMain()
     {
-        AssetBundleManifest manifest = _ABResources.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-        string[] bundleNames = manifest.GetAllAssetBundles();//获取所有的包名
+        //加载AB信息，包含依赖和索引信息
+        mainBundle = this.GetBundle(HIMPath.Src, abResources);
+    }
+    void LoadZero()
+    {
+        //加载0号配置
+        zeroBundle = this.GetBundle(HIMPath.Src, zeroConfig);
+    }
+    void BuildDependence()
+    {
+        if(mainBundle == null) { return; }
+        Manifest = mainBundle.LoadAsset<AssetBundleManifest>(manifestName);
+        string[] bundleNames = Manifest.GetAllAssetBundles();//获取所有的包名
 
         for (int i = 0; i < bundleNames.Length; i++)
         {
             string bundleName = bundleNames[i];
-            string[] dependencies = manifest.GetAllDependencies(bundleName);//获取所有对应包名的依赖
+            string[] dependencies = Manifest.GetAllDependencies(bundleName);//获取所有对应包名的依赖
             if(dependencies.Length > 0)
             {
                 BundleDependence.Add(bundleName, dependencies);
@@ -43,52 +69,115 @@ public class HIMResources : SingleMono<HIMResources>
         }
     }
 
-
-    void BuildEntries(AssetBundle _Zero)
+    void BuildEntries()
     {
-        HIMZeroConfig config = _Zero.LoadAsset<HIMZeroConfig>("Assets/Resources/Zero.asset");
-
+        if(zeroBundle == null) { return; }
+        Debug.Log("------------------------- 创建资源库入口 --------------------------");
+        if (Entries == null) { Entries = new Dictionary<string, string>(); }
+        HIMZeroConfig config = zeroBundle.LoadAsset<HIMZeroConfig>("Zero");
+        for (int i = 0; i < config.Entries.Count; i++)
+        {
+            string key = config.Entries[i];
+            string value = config.Paths[i];
+            Entries.Add(key, value);
+        }
     }
 
     /// <summary>
-    /// 加载 AB 进内存
+    /// 获取bundle
     /// </summary>
-    /// <param name="entry"> 库入口 </param>
-    /// <param name="name"> 文件名字 </param>
-    /// <param name="extension"> 扩展名 </param>
+    /// <param name="_Path"> 资源目录根 </param>
+    /// <param name="_BundleName"> bundle 的相对目录 </param>
     /// <returns></returns>
-    AssetBundle LoadFromFile(string entry, string name,string extension)
+    AssetBundle GetBundle(string _Path, string _BundleName)
     {
-        AssetBundle bundle = null;
-        string bundleName = entry + name + extension;
-        if (string.IsNullOrEmpty(SrcPath)) { return bundle; }
-        string fullName = SrcPath + bundleName;
-        if (!Bundles.ContainsKey(bundleName))
+        string bundleFullName = Path.Combine(_Path, _BundleName);
+        //完成 bundleName 的组装
+        AssetBundle bundleOut = null;
+        Debug.Log(" Get ----------------------------> " + bundleFullName);
+        if (Bundles.ContainsKey(_BundleName))
         {
-            bundle = AssetBundle.LoadFromFile(fullName);
-            Bundles.Add(bundleName, bundle);
+            bundleOut = Bundles[_BundleName];
         }
-        return bundle;
+        else
+        {
+            try
+            {
+                //尚未加载
+                bundleOut = AssetBundle.LoadFromFile(bundleFullName);
+            }
+            catch(Exception ex)
+            {
+                //资源不存在
+                if (onErrorCallBack != null)
+                {
+                    onErrorCallBack.Invoke(string.Format("AssetBundle <color=#00ff00>[{0}]</color> is not exist in -> <color=#ff00ff>{1}</color>", _BundleName, bundleFullName));
+                }
+            }
+        }
+        return bundleOut;
     }
 
-    public void LoadPrefab(string _Path, string _Name)
+    /// <summary>
+    /// 加载
+    /// </summary>
+    /// <param name="_Entry"></param>
+    /// <param name="_Name"></param>
+    /// <param name="_Extension"></param>
+    void LoadBundle(string _Entry, string _Name, string _Extension)
     {
-        if (Manifest == null) { onErrorCallBack.Invoke("HIMResources is not online..."); return; }
-        string extension = ".prefab";
-        string fullName = _Path + _Name + extension;
-        
-        AssetBundle bundle = AssetBundle.LoadFromFile(fullName);
-    
-        string[] deps = Manifest.GetAllDependencies(_Name + extension);
-        List<AssetBundle> bundleList = new List<AssetBundle>();
-        for (int i = 0; i < deps.Length; ++i)
+        string fileName = Path.Combine(_Name, _Extension);
+        string bundleName = Path.Combine(_Entry, fileName);
+    }
+    void LoadDependence(AssetBundle bundle)
+    {
+        string bundleFullName = Path.Combine(HIMPath.Src, bundle.name);
+        if (BundleDependence.ContainsKey(bundle.name))
         {
-            AssetBundle temp = AssetBundle.LoadFromFile(HIMPath.total + deps[i]);
-            bundleList.Add(temp);
+            string[] bundleNames = BundleDependence[bundle.name];
+            for (int i = 0; i < bundleNames.Length; i++)
+            {
+                string bundleName = Path.Combine(HIMPath.Src, bundleNames[i]);
+                Debug.Log(" load dependence---------------------------> " + bundleName);
+                AssetBundle.LoadFromFile(bundleName);
+            }
         }
+    }
 
-        GameObject original = bundle.LoadAsset<GameObject>(_Name + extension);
-        GameObject clone = GameObject.Instantiate(original);
+    public void LoadPrefab(string _Name)
+    {
+        if (!Ready) { return; }
+
+        StringBuilder sb = new StringBuilder();
+        sb.Append(_Name);
+        sb.Append(".prefab");
+
+        string bundleName = Path.Combine(Entries["Prefab"], sb.ToString());
+        AssetBundle bundle = this.GetBundle(HIMPath.Src, bundleName);
+        this.LoadDependence(bundle);
+        //查看AB是否加载
+        GameObject gameObject = bundle.LoadAsset<GameObject>(_Name);
+        GameObject clone = GameObject.Instantiate(gameObject);
+    }
+    /// <summary>
+    /// 加载相对路径的资源
+    /// </summary>
+    /// <param name="_Entry"></param>
+    /// <param name="_Name"></param>
+    public void LoadPrefab(string _Entry, string _Name)
+    {
+        if (!Ready) { return; }
+
+        StringBuilder sb = new StringBuilder();
+        sb.Append(_Name);
+        sb.Append(".prefab");
+
+        string bundleName = Path.Combine(_Entry, sb.ToString());
+        AssetBundle bundle = this.GetBundle(HIMPath.Src, bundleName);
+        this.LoadDependence(bundle);
+        //查看AB是否加载
+        GameObject gameObject = bundle.LoadAsset<GameObject>(_Name);
+        GameObject clone = GameObject.Instantiate(gameObject);
     }
 }
 

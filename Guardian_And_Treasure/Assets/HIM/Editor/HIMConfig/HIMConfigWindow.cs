@@ -15,6 +15,7 @@ public class HIMConfigWindow : EditorWindow
     public bool viewPath = true;
     private void OnGUI()
     {
+        
         EditorGUILayout.LabelField("[1]基本设置");
         GUILayout.Box("", GUILayout.Height(2), GUILayout.ExpandWidth(true));
         EditorGUILayout.LabelField("目标平台：", HIMEditorUtility.BuildType.ToString());
@@ -44,20 +45,36 @@ public class HIMConfigWindow : EditorWindow
             bool check = GUILayout.Button("创建");
             if (check)
             {
-                this.Fix(HIMEditorUtility.ImportPath, HIMEditorUtility.ZroConfig.Entries);
+                this.Fix(HIMEditorUtility.ImportPath, HIMEditorUtility.ZroConfig.Paths);
+                EditorUtility.SetDirty(HIMEditorUtility.ZroConfig);
                 AssetDatabase.Refresh();
             }
             for (int i = 0; i < HIMEditorUtility.ZroConfig.Entries.Count;)
             {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(string.Format("库目录[{0}] ->", i), GUILayout.Width(120));
-                HIMEditorUtility.ZroConfig.Entries[i] = EditorGUILayout.TextField(HIMEditorUtility.ZroConfig.Entries[i]);
+                EditorGUILayout.LabelField(string.Format("库目录[{0}]", i), GUILayout.Width(80));
+                string inputEntry = EditorGUILayout.TextField(HIMEditorUtility.ZroConfig.Entries[i], GUILayout.Width(120));
+                if (inputEntry != HIMEditorUtility.ZroConfig.Entries[i])
+                {
+                    HIMEditorUtility.ZroConfig.Entries[i] = inputEntry;
+                    EditorUtility.SetDirty(HIMEditorUtility.ZroConfig);
+                }
+                string inputPath = EditorGUILayout.TextField(HIMEditorUtility.ZroConfig.Paths[i]);
+                if (inputPath != HIMEditorUtility.ZroConfig.Paths[i])
+                {
+                    HIMEditorUtility.ZroConfig.Paths[i] = inputPath;
+                    EditorUtility.SetDirty(HIMEditorUtility.ZroConfig);
+                }
+                //HIMEditorUtility.ZroConfig.Entries[i] = EditorGUILayout.TextField(HIMEditorUtility.ZroConfig.Entries[i], GUILayout.Width(120));
+                //HIMEditorUtility.ZroConfig.Paths[i] = EditorGUILayout.TextField(HIMEditorUtility.ZroConfig.Paths[i]);
                 GUI.color = Color.red;
                 bool remove = GUILayout.Button("移除[-]", GUILayout.Width(100));
                 GUI.color = Color.white;
                 if (remove)
                 {
                     HIMEditorUtility.ZroConfig.Entries.RemoveAt(i);
+                    HIMEditorUtility.ZroConfig.Paths.RemoveAt(i);
+                    EditorUtility.SetDirty(HIMEditorUtility.ZroConfig);
                 }
                 else
                 {
@@ -72,6 +89,7 @@ public class HIMConfigWindow : EditorWindow
             if (addNew)
             {
                 HIMEditorUtility.ZroConfig.Entries.Add("");
+                HIMEditorUtility.ZroConfig.Paths.Add("");
             }
         }
         else
@@ -86,13 +104,19 @@ public class HIMConfigWindow : EditorWindow
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(string.Format("配置路径[{0}]：", i), GUILayout.Width(80));
-            HIMEditorUtility.EdtConfig.ExcelFolder[i] = EditorGUILayout.TextField(HIMEditorUtility.EdtConfig.ExcelFolder[i]);
+            string inputString = EditorGUILayout.TextField(HIMEditorUtility.EdtConfig.ExcelFolder[i]);
+            if(inputString != HIMEditorUtility.EdtConfig.ExcelFolder[i])
+            {
+                HIMEditorUtility.EdtConfig.ExcelFolder[i] = inputString;
+                EditorUtility.SetDirty(HIMEditorUtility.EdtConfig);
+            }
             GUI.color = Color.red;
             bool remove = GUILayout.Button("移除[-]", GUILayout.Width(100));
             GUI.color = Color.white;
             if (remove)
             {
                 HIMEditorUtility.EdtConfig.ExcelFolder.RemoveAt(i);
+                EditorUtility.SetDirty(HIMEditorUtility.EdtConfig);
             }
             else
             {
@@ -108,10 +132,6 @@ public class HIMConfigWindow : EditorWindow
             HIMEditorUtility.EdtConfig.ExcelFolder.Add("");
         }
     }
-
-
-    
-
 
     public void Fix(string _Path,List<string> _Folders)
     {

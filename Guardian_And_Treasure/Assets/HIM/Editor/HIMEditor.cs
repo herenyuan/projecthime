@@ -128,10 +128,13 @@ public class HIMEditorUtility
 
         return (T)data;
     }
-    public static T LoadAsset<T>(string assetPath, string assetName) where T : ScriptableObject
+    public static void Save<T>(string assetName, T target) where T : ScriptableObject
     {
-        string assetFullName = string.Format(assetPath, assetName);
-        return AssetDatabase.LoadAssetAtPath<T>(assetFullName);
+        string fullName = Path.Combine(ProjectPath, assetName);
+        Object data = target;
+        FileInfo fi = new FileInfo(fullName);
+        if (!fi.Directory.Exists) { fi.Directory.Create(); }
+        AssetDatabase.Refresh();
     }
     public static T LoadAsset<T>(string assetName) where T : ScriptableObject
     {

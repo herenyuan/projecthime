@@ -15,4 +15,6 @@ MonoBehaviour:
   ImportABFolder: Resources
   ExportJsonFolder: Config
   ExportABFolder: ABResources
-  ExcelFolder: []
+  ExcelFolder:
+  - D:\Unity2017\Project2\projecthime\Doc\excel
+  - D:\Unity2017\Project2\projecthime\Doc\excel\client
