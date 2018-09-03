@@ -39,7 +39,7 @@ public class HIMResources : SingleMono<HIMResources>
 
         //this.LoadPrefab("ball");
         this.LoadPrefab("Prefab","ball");
-        this.LoadPrefab("Prefab/GUI", "ball2");
+        this.LoadPrefab("prefab/gui", "ball2");
         int a = 0;
     }
     void LoadMain()
@@ -105,6 +105,7 @@ public class HIMResources : SingleMono<HIMResources>
             {
                 //尚未加载
                 bundleOut = AssetBundle.LoadFromFile(bundleFullName);
+                Bundles.Add(_BundleName, bundleOut);
             }
             catch(Exception ex)
             {
@@ -137,9 +138,8 @@ public class HIMResources : SingleMono<HIMResources>
             string[] bundleNames = BundleDependence[bundle.name];
             for (int i = 0; i < bundleNames.Length; i++)
             {
-                string bundleName = Path.Combine(HIMPath.Src, bundleNames[i]);
-                Debug.Log(" load dependence---------------------------> " + bundleName);
-                AssetBundle.LoadFromFile(bundleName);
+                Debug.Log(" load dependence---------------------------> " + bundleNames[i]);
+                this.GetBundle(HIMPath.Src, bundleNames[i]);
             }
         }
     }

@@ -178,7 +178,7 @@ public class HIMABEditorWindow : EditorWindow
                 builds[i] = build;
             }
             if (!Directory.Exists(ExportFolder)) { Directory.CreateDirectory(ExportFolder); }
-            BuildPipeline.BuildAssetBundles(ExportFolder, builds, BuildAssetBundleOptions.None, HIMEditorUtility.BuildType);
+            BuildPipeline.BuildAssetBundles(ExportFolder, builds, BuildAssetBundleOptions.UncompressedAssetBundle, HIMEditorUtility.BuildType);
             AssetDatabase.Refresh();
         }
     }
