@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 683994138
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: cea71874118c8b17b041ac08a6d19e32
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 460b4f5d62b6facbccf7c01637df8f00
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Sprite/icon10005.png
+Dependencies: []

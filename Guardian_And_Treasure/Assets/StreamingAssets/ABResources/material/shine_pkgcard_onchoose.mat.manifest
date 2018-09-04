@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3386839331
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9abf6341ce74cc5206ff7476f092f5cd
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c2bdabd68c118aabc18c59eaf5951821
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Material/shine_pkgcard_onchoose.mat
+Dependencies:
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/shader/shine.shader

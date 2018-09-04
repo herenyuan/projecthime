@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3700974984
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fb017376b679515d5db36eb550efd859
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c2bdabd68c118aabc18c59eaf5951821
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Material/shine_stance_switchon.mat
+Dependencies:
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/shader/shine.shader

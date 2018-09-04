@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 577347295
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a8d91309bd655c42e0bc5186b6c43a5d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6370d3f9de9eca57f523bce048404a46
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Shader/Shine.shader
+Dependencies: []

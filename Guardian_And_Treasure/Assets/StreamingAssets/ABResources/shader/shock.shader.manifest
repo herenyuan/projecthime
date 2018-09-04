@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 215756016
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c5f5def71c3519fbc8b77bdd4554661f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6370d3f9de9eca57f523bce048404a46
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Shader/Shock.shader
+Dependencies: []

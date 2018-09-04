@@ -1,0 +1,463 @@
+ManifestFileVersion: 0
+CRC: 3630267765
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: zero.asset
+      Dependencies: {}
+    Info_1:
+      Name: prefab/camera/camera002.prefab
+      Dependencies: {}
+    Info_2:
+      Name: prefab/gui/gui.prefab
+      Dependencies: {}
+    Info_3:
+      Name: prefab/gui/hud1.prefab
+      Dependencies:
+        Dependency_0: sprite/icon10004.png
+        Dependency_1: sprite/icon10005.png
+        Dependency_2: sprite/icon20002.png
+        Dependency_3: sprite/icon20006.png
+        Dependency_4: sprite/icon90001.png
+        Dependency_5: sprite/icon90001a.png
+        Dependency_6: sprite/icon90004a.png
+        Dependency_7: sprite/icon90006.png
+        Dependency_8: sprite/icon90008.png
+        Dependency_9: sprite/none.jpg
+    Info_4:
+      Name: prefab/gui/hud2.prefab
+      Dependencies: {}
+    Info_5:
+      Name: prefab/gui/uibattlecurtain.prefab
+      Dependencies: {}
+    Info_6:
+      Name: prefab/gui/uidebug.prefab
+      Dependencies: {}
+    Info_7:
+      Name: prefab/gui/uidialogtest.prefab
+      Dependencies: {}
+    Info_8:
+      Name: prefab/gui/uiloading.prefab
+      Dependencies: {}
+    Info_9:
+      Name: prefab/gui/uilobby.prefab
+      Dependencies:
+        Dependency_0: sprite/icon20006.png
+    Info_10:
+      Name: prefab/gui/uilogin.prefab
+      Dependencies: {}
+    Info_11:
+      Name: prefab/gui/uilvmap.prefab
+      Dependencies: {}
+    Info_12:
+      Name: prefab/gui/uipvedefeat.prefab
+      Dependencies: {}
+    Info_13:
+      Name: prefab/gui/uipvevictory.prefab
+      Dependencies: {}
+    Info_14:
+      Name: prefab/gui/uipvpagainestinformation.prefab
+      Dependencies:
+        Dependency_0: sprite/none.jpg
+    Info_15:
+      Name: prefab/gui/uipvpdefeat.prefab
+      Dependencies: {}
+    Info_16:
+      Name: prefab/gui/uipvpmatching.prefab
+      Dependencies: {}
+    Info_17:
+      Name: prefab/gui/uipvpvictory.prefab
+      Dependencies: {}
+    Info_18:
+      Name: prefab/gui/uiroot.prefab
+      Dependencies: {}
+    Info_19:
+      Name: prefab/gui/uisetcharacter.prefab
+      Dependencies: {}
+    Info_20:
+      Name: prefab/gui/uisetformation.prefab
+      Dependencies:
+        Dependency_0: sprite/icon10004.png
+        Dependency_1: sprite/icon10004a.png
+        Dependency_2: sprite/icon90005.png
+        Dependency_3: sprite/icon90008.png
+        Dependency_4: sprite/start01.png
+        Dependency_5: material/gray_skill_disable.mat
+    Info_21:
+      Name: prefab/gui/uisetplayerinformation.prefab
+      Dependencies:
+        Dependency_0: sprite/icon20002.png
+    Info_22:
+      Name: prefab/item/ball.prefab
+      Dependencies: {}
+    Info_23:
+      Name: prefab/item/ball2.prefab
+      Dependencies: {}
+    Info_24:
+      Name: prefab/item/item001.prefab
+      Dependencies: {}
+    Info_25:
+      Name: prefab/stage/stage10001.prefab
+      Dependencies:
+        Dependency_0: sprite/icon90004.png
+    Info_26:
+      Name: prefab/stage/stagelogin.prefab
+      Dependencies: {}
+    Info_27:
+      Name: prefab/stage/stageworld.prefab
+      Dependencies:
+        Dependency_0: sprite/icon30001.png
+        Dependency_1: sprite/icon30002.png
+        Dependency_2: sprite/icon30003.png
+    Info_28:
+      Name: prefab/stage/stagex.prefab
+      Dependencies: {}
+    Info_29:
+      Name: texture/icon10000.png
+      Dependencies: {}
+    Info_30:
+      Name: config/account.json
+      Dependencies: {}
+    Info_31:
+      Name: config/bag.json
+      Dependencies: {}
+    Info_32:
+      Name: config/buff.json
+      Dependencies: {}
+    Info_33:
+      Name: config/businessman.json
+      Dependencies: {}
+    Info_34:
+      Name: config/commander.json
+      Dependencies: {}
+    Info_35:
+      Name: config/errorcode.json
+      Dependencies: {}
+    Info_36:
+      Name: config/hero.json
+      Dependencies: {}
+    Info_37:
+      Name: config/heroskill.json
+      Dependencies: {}
+    Info_38:
+      Name: config/initdata.json
+      Dependencies: {}
+    Info_39:
+      Name: config/item.json
+      Dependencies: {}
+    Info_40:
+      Name: config/language.json
+      Dependencies: {}
+    Info_41:
+      Name: config/language_skill.json
+      Dependencies: {}
+    Info_42:
+      Name: config/language_task.json
+      Dependencies: {}
+    Info_43:
+      Name: config/leadlevel.json
+      Dependencies: {}
+    Info_44:
+      Name: config/leadskill.json
+      Dependencies: {}
+    Info_45:
+      Name: config/pvpmap.json
+      Dependencies: {}
+    Info_46:
+      Name: config/rand_name.json
+      Dependencies: {}
+    Info_47:
+      Name: config/role.json
+      Dependencies: {}
+    Info_48:
+      Name: config/silvercoin.json
+      Dependencies: {}
+    Info_49:
+      Name: config/stage.json
+      Dependencies: {}
+    Info_50:
+      Name: config/talentlevel.json
+      Dependencies: {}
+    Info_51:
+      Name: config/talentopen.json
+      Dependencies: {}
+    Info_52:
+      Name: config/vitality.json
+      Dependencies: {}
+    Info_53:
+      Name: sprite/icon10004.png
+      Dependencies: {}
+    Info_54:
+      Name: sprite/icon10004a.png
+      Dependencies: {}
+    Info_55:
+      Name: sprite/icon10005.png
+      Dependencies: {}
+    Info_56:
+      Name: sprite/icon10005a.png
+      Dependencies: {}
+    Info_57:
+      Name: sprite/icon10006.png
+      Dependencies: {}
+    Info_58:
+      Name: sprite/icon10006a.png
+      Dependencies: {}
+    Info_59:
+      Name: sprite/icon10007.png
+      Dependencies: {}
+    Info_60:
+      Name: sprite/icon10007a.png
+      Dependencies: {}
+    Info_61:
+      Name: sprite/icon10008.png
+      Dependencies: {}
+    Info_62:
+      Name: sprite/icon10008a.png
+      Dependencies: {}
+    Info_63:
+      Name: sprite/icon10009.png
+      Dependencies: {}
+    Info_64:
+      Name: sprite/icon10009a.png
+      Dependencies: {}
+    Info_65:
+      Name: sprite/icon10010.png
+      Dependencies: {}
+    Info_66:
+      Name: sprite/icon10010a.png
+      Dependencies: {}
+    Info_67:
+      Name: sprite/icon10011.png
+      Dependencies: {}
+    Info_68:
+      Name: sprite/icon10011a.png
+      Dependencies: {}
+    Info_69:
+      Name: sprite/icon10012.png
+      Dependencies: {}
+    Info_70:
+      Name: sprite/icon10012a.png
+      Dependencies: {}
+    Info_71:
+      Name: sprite/icon10013.png
+      Dependencies: {}
+    Info_72:
+      Name: sprite/icon10013a.png
+      Dependencies: {}
+    Info_73:
+      Name: sprite/icon10014.png
+      Dependencies: {}
+    Info_74:
+      Name: sprite/icon10014a.png
+      Dependencies: {}
+    Info_75:
+      Name: sprite/icon20001.png
+      Dependencies: {}
+    Info_76:
+      Name: sprite/icon20002.png
+      Dependencies: {}
+    Info_77:
+      Name: sprite/icon20003.png
+      Dependencies: {}
+    Info_78:
+      Name: sprite/icon20004.png
+      Dependencies: {}
+    Info_79:
+      Name: sprite/icon20005.png
+      Dependencies: {}
+    Info_80:
+      Name: sprite/icon20006.png
+      Dependencies: {}
+    Info_81:
+      Name: sprite/icon20007.png
+      Dependencies: {}
+    Info_82:
+      Name: sprite/icon20008.png
+      Dependencies: {}
+    Info_83:
+      Name: sprite/icon20009.png
+      Dependencies: {}
+    Info_84:
+      Name: sprite/icon30001.png
+      Dependencies: {}
+    Info_85:
+      Name: sprite/icon30002.png
+      Dependencies: {}
+    Info_86:
+      Name: sprite/icon30003.png
+      Dependencies: {}
+    Info_87:
+      Name: sprite/icon90001.png
+      Dependencies: {}
+    Info_88:
+      Name: sprite/icon90001a.png
+      Dependencies: {}
+    Info_89:
+      Name: sprite/icon90002.png
+      Dependencies: {}
+    Info_90:
+      Name: sprite/icon90002a.png
+      Dependencies: {}
+    Info_91:
+      Name: sprite/icon90003.png
+      Dependencies: {}
+    Info_92:
+      Name: sprite/icon90003a.png
+      Dependencies: {}
+    Info_93:
+      Name: sprite/icon90004.png
+      Dependencies: {}
+    Info_94:
+      Name: sprite/icon90004a.png
+      Dependencies: {}
+    Info_95:
+      Name: sprite/icon90005.png
+      Dependencies: {}
+    Info_96:
+      Name: sprite/icon90006.png
+      Dependencies: {}
+    Info_97:
+      Name: sprite/icon90007.png
+      Dependencies: {}
+    Info_98:
+      Name: sprite/icon90008.png
+      Dependencies: {}
+    Info_99:
+      Name: sprite/icon90009.png
+      Dependencies: {}
+    Info_100:
+      Name: sprite/none.jpg
+      Dependencies: {}
+    Info_101:
+      Name: sprite/start01.png
+      Dependencies: {}
+    Info_102:
+      Name: sprite/start_.png
+      Dependencies: {}
+    Info_103:
+      Name: mp3/battle_begin.mp3
+      Dependencies: {}
+    Info_104:
+      Name: mp3/battle_bgm.mp3
+      Dependencies: {}
+    Info_105:
+      Name: mp3/battle_fury_full.mp3
+      Dependencies: {}
+    Info_106:
+      Name: mp3/battle_loot.mp3
+      Dependencies: {}
+    Info_107:
+      Name: mp3/battle_lose.mp3
+      Dependencies: {}
+    Info_108:
+      Name: mp3/battle_next_wave.mp3
+      Dependencies: {}
+    Info_109:
+      Name: mp3/battle_win.mp3
+      Dependencies: {}
+    Info_110:
+      Name: mp3/common_add_queue.mp3
+      Dependencies: {}
+    Info_111:
+      Name: mp3/common_alert.mp3
+      Dependencies: {}
+    Info_112:
+      Name: "mp3/\u516C\u4E3B\u5927\u62DB.mp3"
+      Dependencies: {}
+    Info_113:
+      Name: "mp3/\u516C\u4E3B\u5927\u62DB\u53D7\u51FB.mp3"
+      Dependencies: {}
+    Info_114:
+      Name: "mp3/\u516C\u4E3B\u666E\u653B.mp3"
+      Dependencies: {}
+    Info_115:
+      Name: "mp3/\u516C\u4E3B\u666E\u653B\u53D7\u51FB.mp3"
+      Dependencies: {}
+    Info_116:
+      Name: "mp3/\u516C\u4E3B\u6B7B\u4EA1.mp3"
+      Dependencies: {}
+    Info_117:
+      Name: "mp3/\u5DE8\u4EBA\u5927\u62DB.mp3"
+      Dependencies: {}
+    Info_118:
+      Name: "mp3/\u5DE8\u4EBA\u5927\u62DB\u53D7\u51FB.mp3"
+      Dependencies: {}
+    Info_119:
+      Name: "mp3/\u5DE8\u4EBA\u666E\u653B.mp3"
+      Dependencies: {}
+    Info_120:
+      Name: "mp3/\u5DE8\u4EBA\u666E\u653B\u53D7\u51FB.mp3"
+      Dependencies: {}
+    Info_121:
+      Name: "mp3/\u5DE8\u4EBA\u6B7B\u4EA1.mp3"
+      Dependencies: {}
+    Info_122:
+      Name: "mp3/\u718A\u732B\u5927\u62DB.mp3"
+      Dependencies: {}
+    Info_123:
+      Name: "mp3/\u718A\u732B\u5927\u62DB\u53D7\u51FB.mp3"
+      Dependencies: {}
+    Info_124:
+      Name: "mp3/\u718A\u732B\u666E\u653B.mp3"
+      Dependencies: {}
+    Info_125:
+      Name: "mp3/\u718A\u732B\u666E\u653B\u53D7\u51FB.mp3"
+      Dependencies: {}
+    Info_126:
+      Name: "mp3/\u718A\u732B\u6B7B\u4EA1.mp3"
+      Dependencies: {}
+    Info_127:
+      Name: material/gray_skill_disable.mat
+      Dependencies:
+        Dependency_0: shader/gray.shader
+    Info_128:
+      Name: material/none.mat
+      Dependencies:
+        Dependency_0: shader/gray.shader
+    Info_129:
+      Name: material/shine_formation_disable.mat
+      Dependencies:
+        Dependency_0: shader/shine.shader
+    Info_130:
+      Name: material/shine_formation_enable.mat
+      Dependencies:
+        Dependency_0: shader/shine.shader
+    Info_131:
+      Name: material/shine_green_highlight.mat
+      Dependencies:
+        Dependency_0: shader/shine.shader
+    Info_132:
+      Name: material/shine_pkgcard_onchoose.mat
+      Dependencies:
+        Dependency_0: shader/shine.shader
+    Info_133:
+      Name: material/shine_skill_onchoose.mat
+      Dependencies:
+        Dependency_0: shader/shine.shader
+    Info_134:
+      Name: material/shine_stance_onhover.mat
+      Dependencies:
+        Dependency_0: shader/shine.shader
+    Info_135:
+      Name: material/shine_stance_showrange.mat
+      Dependencies:
+        Dependency_0: shader/shine.shader
+    Info_136:
+      Name: material/shine_stance_switchon.mat
+      Dependencies:
+        Dependency_0: shader/shine.shader
+    Info_137:
+      Name: shader/bgsprite.shader
+      Dependencies: {}
+    Info_138:
+      Name: shader/defaultsprite.shader
+      Dependencies: {}
+    Info_139:
+      Name: shader/gray.shader
+      Dependencies: {}
+    Info_140:
+      Name: shader/shine.shader
+      Dependencies: {}
+    Info_141:
+      Name: shader/shock.shader
+      Dependencies: {}

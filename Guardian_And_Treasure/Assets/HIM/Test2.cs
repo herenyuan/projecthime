@@ -9,25 +9,35 @@ public class Test2 : MonoBehaviour {
     public bool Active = false;
     public bool Find = false;
     public Text txt;
-	void Start () {
+    public Image IMGTest;
+    TextAsset txtAsset;
+    string str = "";
+    public Sprite sp;
+    void Start () {
 
-        string str = "";
+       
         str += "GUID: "+ Application.buildGUID + "\n";
         str += "persistentDataPath: " + Application.persistentDataPath + "\n";
-        //Debug.Log(Application.buildGUID);
+        str += "HIMPath.Src: " + HIMPath.Src + "\n";
         txt.text = str;
-        //HIM.Online();
+        HIMResources.Ins.onErrorCallBack = onError;
+        HIMResources.Ins.onMessageCallBack = onError;
         HIMResources.Ins.Online();
+        HIMResources.Ins.LoadPrefab("prefab/item/", "ball");
+        HIMResources.Ins.LoadPrefab("prefab/item/", "ball2");
+        txtAsset = HIMResources.Ins.LoadText("config","buff",".json");
+        IMGTest.sprite = HIMResources.Ins.LoadImage("sprite", "icon10004");
+        Debug.Log(txtAsset.text);
+    }
+    void onError(string msg)
+    {
+        str += msg+"\n";
+        txt.text = str;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Active)
-        {
-            Active = false;
-            HIMResources.Ins.LoadPrefab(HIMPath.Prefab, "ball");
-        }
         
     }
 }

@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3547411963
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 84eb1e3e5cefae5804b0f2ec8b5bc09c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 460b4f5d62b6facbccf7c01637df8f00
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Sprite/icon30002.png
+Dependencies: []

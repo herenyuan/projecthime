@@ -1,0 +1,96 @@
+ManifestFileVersion: 0
+CRC: 639581438
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b66c1e781531df5ac0a204d59ed52fcb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 56ec6ff94c23b9aa7f8f92da9eb3f1fa
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 575553740, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -1184210157, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f825bb5ce93d6ab429dfa508444119b0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0dfe11beb597d1a40a892f995bd31b3d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 063223cf2eeedb84ca47c9438079da33, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f09b6dc2f11ee0a4a99d798878419138, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 205e18d28e95ab04ab340edc81ab139f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e77f3aed19e5a5545810f425c97683c1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b8f84d10c49b97e4c8e41b342aa8d4d5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f10f77d11840583469967044cb27ae04, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b3bc69973f6a540458ddacb883afbf5e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b0a3a74afba9cc849b1428595156d3a1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d52c3b6cf88c3b646bfa83904a6f3949, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5489e93e2fe022f479accb1da842eb74, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7a46c171822e27e42aef9ab389b9e01f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6bd663fdb457ea148baf322e88389945, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Prefab/GUI/UISetFormation.prefab
+Dependencies:
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon10004.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon10004a.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon90005.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/icon90008.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/sprite/start01.png
+- D:/Unity2017/Project2/projecthime/Guardian_And_Treasure/ABResources/material/gray_skill_disable.mat

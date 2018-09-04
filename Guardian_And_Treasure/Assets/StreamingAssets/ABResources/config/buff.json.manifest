@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1842581502
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 82c7fe816949eb44f8633f13b80fe27e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Config/buff.json
+Dependencies: []

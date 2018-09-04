@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 219114446
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a4ee0a8faefb5d718ee11c761c294cb8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6370d3f9de9eca57f523bce048404a46
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Shader/BGSprite.shader
+Dependencies: []

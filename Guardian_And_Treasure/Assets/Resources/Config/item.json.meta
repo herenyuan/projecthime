@@ -5,5 +5,5 @@ licenseType: Pro
 TextScriptImporter:
   externalObjects: {}
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName: config/item
+  assetBundleVariant: json
