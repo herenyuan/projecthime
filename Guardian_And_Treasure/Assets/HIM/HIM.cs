@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class HIM
 {
-    public string Version;
-    public string ABExport;
-    private static Dictionary<string, string> m_Path = new Dictionary<string, string>();
-    public static Dictionary<string, string> Path
-    {
-        get { return m_Path; }
-        private set { m_Path = value; }
-    }
     /// <summary>
     /// 程序启动时调用
     /// </summary>

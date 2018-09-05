@@ -33,26 +33,12 @@ public class HIMResources : SingleMono<HIMResources>
     }
     public void Online()
     {
-        this.LoadMain();
-        this.LoadZero();
-        this.BuildDependence();
-        this.BuildEntries();
-
-    }
-    void LoadMain()
-    {
         this.Log("读取 main 包");
         //加载AB信息，包含依赖和索引信息
-        mainBundle = this.GetBundle(HIMPath.Src, abResources);
-    }
-    void LoadZero()
-    {
+        mainBundle = this.GetBundle(HIMPath.Src, HIMPlatform.Current);
         this.Log("读取 zero 包");
         //加载0号配置
         zeroBundle = this.GetBundle(HIMPath.Src, zeroConfig);
-    }
-    void BuildDependence()
-    {
         if (mainBundle == null) { return; }
         this.Log("创建依赖关系");
         Manifest = mainBundle.LoadAsset<AssetBundleManifest>(manifestName);
@@ -67,10 +53,7 @@ public class HIMResources : SingleMono<HIMResources>
                 BundleDependence.Add(bundleName, dependencies);
             }
         }
-    }
 
-    void BuildEntries()
-    {
         if (zeroBundle == null) { return; }
         this.Log("创建资源库入口");
         if (Entries == null) { Entries = new Dictionary<string, string>(); }
@@ -101,15 +84,14 @@ public class HIMResources : SingleMono<HIMResources>
         }
         else
         {
-            try
+            //尚未加载
+            bundleOut = AssetBundle.LoadFromFile(bundleFullName);
+            if (bundleOut != null)
             {
-                //尚未加载
-                bundleOut = AssetBundle.LoadFromFile(bundleFullName);
                 Bundles.Add(_BundleName, bundleOut);
             }
-            catch (Exception ex)
+            else
             {
-                //资源不存在
                 if (onErrorCallBack != null)
                 {
                     onErrorCallBack.Invoke(string.Format("AssetBundle <color=#00ff00>[{0}]</color> is not exist in -> <color=#ff00ff>{1}</color>", _BundleName, bundleFullName));
@@ -118,20 +100,9 @@ public class HIMResources : SingleMono<HIMResources>
         }
         return bundleOut;
     }
-
-    /// <summary>
-    /// 加载
-    /// </summary>
-    /// <param name="_Entry"></param>
-    /// <param name="_Name"></param>
-    /// <param name="_Extension"></param>
-    void LoadBundle(string _Entry, string _Name, string _Extension)
-    {
-        string fileName = Path.Combine(_Name, _Extension);
-        string bundleName = Path.Combine(_Entry, fileName);
-    }
     void LoadDependence(AssetBundle bundle)
     {
+        if(bundle == null) { return; }
         string bundleFullName = Path.Combine(HIMPath.Src, bundle.name);
         if (BundleDependence.ContainsKey(bundle.name))
         {
@@ -157,56 +128,64 @@ public class HIMResources : SingleMono<HIMResources>
     /// </summary>
     /// <param name="_Entry"></param>
     /// <param name="_Name"></param>
-    public void LoadPrefab(string _Entry, string _Name)
+    public GameObject LoadPrefab(string _Entry, string _Name,string _Extension = ".prefab")
     {
-        if (!Ready) { return; }
-        StringBuilder sb = new StringBuilder();
-        sb.Append(_Name);
-        sb.Append(".prefab");
-
-        string bundleName = Path.Combine(_Entry, sb.ToString());
-        AssetBundle bundle = this.GetBundle(HIMPath.Src, bundleName);
-        this.LoadDependence(bundle);
-        //查看AB是否加载
-        GameObject gameObject = bundle.LoadAsset<GameObject>(_Name);
-        GameObject clone = GameObject.Instantiate(gameObject);
+        GameObject original = this.Load<GameObject>(_Entry, _Name, _Extension);
+        GameObject clone = null;
+        if (original!=null)
+        {
+            clone = GameObject.Instantiate(original);
+        }
+        return clone;
     }
     public TextAsset LoadText(string _Entry, string _Name, string _Extension)
     {
-        if (!Ready) { return null; }
-        StringBuilder sb = new StringBuilder();
-        sb.Append(_Name);
-        sb.Append(_Extension);
-        string bundleName = Path.Combine(_Entry, sb.ToString());
-        AssetBundle bundle = this.GetBundle(HIMPath.Src, bundleName);
         // Json 不需要查找依赖关系
-        TextAsset txt = bundle.LoadAsset<TextAsset>(_Name);
+        TextAsset txt = this.Load<TextAsset>(_Entry, _Name, _Extension);
         return txt;
     }
-    public Material LoadMaterial(string _Entry, string _Name)
+    public Material LoadMaterial(string _Entry, string _Name, string _Extension = ".mat")
     {
-        if (!Ready) { return null; }
-        StringBuilder sb = new StringBuilder();
-        sb.Append(_Name);
-        sb.Append(".mat");
-
-        string bundleName = Path.Combine(_Entry, sb.ToString());
-        AssetBundle bundle = this.GetBundle(HIMPath.Src, bundleName);
-        this.LoadDependence(bundle);
         //查看AB是否加载
-        Material mat = bundle.LoadAsset<Material>(_Name);
+        Material mat = this.Load<Material>(_Entry, _Name, _Extension);
         return mat;
     }
-    public Sprite LoadImage(string _Entry, string _Name, string extension = ".png")
+    public Sprite LoadImage(string _Entry, string _Name, string _Extension = ".png")
     {
-        StringBuilder sb = new StringBuilder();
-        sb.Append(_Name);
-        sb.Append(extension);
-        string bundleName = Path.Combine(_Entry, sb.ToString());
-        AssetBundle bundle = this.GetBundle(HIMPath.Src, bundleName);
         // Sprite 不需要查找依赖关系
-        Sprite sp = bundle.LoadAsset<Sprite>(_Name);
+        Sprite sp = this.Load<Sprite>(_Entry, _Name, _Extension);
         return sp;
+    }
+
+    /// <summary>
+    /// 加载 T 类型的数据到内存中
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    private T Load<T>(string _Entry, string _Name, string _Extension) where T : UnityEngine.Object
+    {
+        string srcName = Path.Combine(_Entry, _Name);
+        T ins = Resources.Load<T>(srcName);
+        if (ins == null)
+        {
+            //Src 中不存在
+            string bundleName = srcName + _Extension;
+            AssetBundle bundle = this.GetBundle(HIMPath.Src, bundleName.ToLower());
+            if (bundle != null)
+            {
+                this.LoadDependence(bundle);
+                ins = bundle.LoadAsset<T>(_Name);
+            }
+        }
+        if(ins == null)
+        {
+            if (onErrorCallBack != null)
+            {
+                onErrorCallBack.Invoke(string.Format("Src <color=#00ff00>[{0}]</color> is not exist.....", _Name));
+            }
+        }
+        //完成 bundleName 的组装
+        return ins;
     }
 }
 

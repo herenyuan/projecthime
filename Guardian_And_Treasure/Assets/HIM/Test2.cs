@@ -23,11 +23,13 @@ public class Test2 : MonoBehaviour {
         HIMResources.Ins.onErrorCallBack = onError;
         HIMResources.Ins.onMessageCallBack = onError;
         HIMResources.Ins.Online();
-        HIMResources.Ins.LoadPrefab("prefab/item/", "ball");
-        HIMResources.Ins.LoadPrefab("prefab/item/", "ball2");
-        txtAsset = HIMResources.Ins.LoadText("config","buff",".json");
-        IMGTest.sprite = HIMResources.Ins.LoadImage("sprite", "icon10004");
-        Debug.Log(txtAsset.text);
+        HIMResources.Ins.LoadPrefab("Prefab/Item/", "Ball");
+        //HIMResources.Ins.LoadPrefab("Prefab/Item/", "Ball2");
+        //HIMResources.Ins.LoadPrefab("Prefab/Item/", "Ball3");
+        
+        //txtAsset = HIMResources.Ins.LoadText("config","buff",".json");
+        //IMGTest.sprite = HIMResources.Ins.LoadImage("sprite", "icon10004");
+        //Debug.Log(txtAsset.text);
     }
     void onError(string msg)
     {

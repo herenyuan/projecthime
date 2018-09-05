@@ -41,7 +41,7 @@ public class HIMABEditorWindow : EditorWindow
     public void Initialization()
     {
         ImportFolder = HIMEditorUtility.ImportPath;
-        ExportFolder = HIMEditorUtility.ExportPath;
+        ExportFolder = Path.Combine(HIMEditorUtility.ExportPath, HIMEditorUtility.BuildType.ToString());
     }
 
     private void OnGUI()
@@ -123,7 +123,7 @@ public class HIMABEditorWindow : EditorWindow
             }
             if (remove)
             {
-                Debug.Log("移除 ---------------------------> " + assetCollection[i].fullName);
+                //Debug.Log("移除 ---------------------------> " + assetCollection[i].fullName);
                 assetCollection.RemoveAt(i);
             }
             else
@@ -171,22 +171,10 @@ public class HIMABEditorWindow : EditorWindow
 
         if (beginPackage)
         {
-            //AssetBundleBuild[] builds = new AssetBundleBuild[assetCollection.Count];
-            //for (int i = 0; i < assetCollection.Count; i++)
-            //{
-            //    AssetBundleBuild build = new AssetBundleBuild();
-            //    AssetInfo info = assetCollection[i];
-            //    string[] assetPaths = new string[]
-            //    {
-            //        info.rootPath,
-            //    };
-            //    build.assetNames = assetPaths;
-            //    build.assetBundleName = info.srcPath;
-            //    builds[i] = build;
-            //}
+
             if (!Directory.Exists(ExportFolder)) { Directory.CreateDirectory(ExportFolder); }
-            //BuildPipeline.BuildAssetBundles(ExportFolder, builds, BuildAssetBundleOptions.None, HIMEditorUtility.BuildType);
-            BuildPipeline.BuildAssetBundles(ExportFolder, BuildAssetBundleOptions.None, HIMEditorUtility.BuildType);
+            ExportFolder = ExportFolder.ToLower();
+            BuildPipeline.BuildAssetBundles(ExportFolder, BuildAssetBundleOptions.UncompressedAssetBundle, HIMEditorUtility.BuildType);
             AssetDatabase.Refresh();
         }
     }
