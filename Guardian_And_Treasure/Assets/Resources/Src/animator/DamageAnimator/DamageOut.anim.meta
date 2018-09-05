@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 2e0333820c99f334f910bc5cfc10e666
+timeCreated: 1534005780
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: src/animator/damageanimator/damageout
+  assetBundleVariant: anim

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 606225afb060f3a4889a20c32a834661
+timeCreated: 1528791028
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: src/effects/panda_atk/panda_atk_data
+  assetBundleVariant: asset

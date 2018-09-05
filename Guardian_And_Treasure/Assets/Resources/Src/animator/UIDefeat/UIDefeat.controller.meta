@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 0fc3f022a1c7a39488a0e5ee7fe3730b
+timeCreated: 1534129647
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: src/animator/uidefeat/uidefeat
+  assetBundleVariant: controller

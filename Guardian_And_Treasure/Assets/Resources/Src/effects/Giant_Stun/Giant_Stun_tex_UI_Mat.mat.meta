@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: f4ac21f6a4e5166409dc71bc32e370dc
+timeCreated: 1530003895
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: src/effects/giant_stun/giant_stun_tex_ui_mat
+  assetBundleVariant: mat

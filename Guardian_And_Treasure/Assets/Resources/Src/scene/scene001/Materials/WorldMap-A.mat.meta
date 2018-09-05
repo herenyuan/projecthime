@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: e9850ae6b3f69744ebfebfa27f657965
+timeCreated: 1534820935
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: src/scene/scene001/materials/worldmap-a
+  assetBundleVariant: mat

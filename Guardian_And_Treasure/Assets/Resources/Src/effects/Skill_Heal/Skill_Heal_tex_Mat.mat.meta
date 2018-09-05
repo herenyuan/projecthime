@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 1c6973344981d0047b1288add095322e
+timeCreated: 1528791202
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: src/effects/skill_heal/skill_heal_tex_mat
+  assetBundleVariant: mat

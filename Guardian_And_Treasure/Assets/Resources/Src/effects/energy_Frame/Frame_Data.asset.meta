@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: a1dd41a0347ed9549bdc623996bd37ce
+timeCreated: 1528790884
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: src/effects/energy_frame/frame_data
+  assetBundleVariant: asset

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: b0a00d25ebaac874093b370b7bde57e2
+timeCreated: 1530002669
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: src/effects/anger/anger_tex_ui_mat
+  assetBundleVariant: mat

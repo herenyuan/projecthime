@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: d24105eb272b73c4bb223ba074953b21
+timeCreated: 1528790951
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: src/effects/giant_atk/giant_atk_tex_mat
+  assetBundleVariant: mat

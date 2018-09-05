@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 3c8d88a41ecc5994aaf82e940a038e0d
+timeCreated: 1528789890
+licenseType: Pro
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: src/effects/skill_stun/skill_stun_ske
+  assetBundleVariant: json

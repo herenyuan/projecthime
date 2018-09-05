@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 5b2b37a3b77b249429f4fb2f739d90d3
+timeCreated: 1528791175
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: src/effects/skill_harm/skill_harm_tex_mat
+  assetBundleVariant: mat

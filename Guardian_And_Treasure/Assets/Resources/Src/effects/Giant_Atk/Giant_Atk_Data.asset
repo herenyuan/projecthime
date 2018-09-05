@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a64e5b0e436d4bed9780211ae245f7b, type: 3}
+  m_Name: Giant_Atk_Data
+  m_EditorClassIdentifier: 
+  dataName: Giant_Atk
+  dragonBonesJSON: {fileID: 4900000, guid: 670011624d83fba46932753f117c8dba, type: 3}
+  textureAtlas:
+  - textureAtlasJSON: {fileID: 4900000, guid: bf715338e5919614ba0f3cde151001bf, type: 3}
+    texture: {fileID: 2800000, guid: eb3605542fe12294abba754329d56fc8, type: 3}
+    material: {fileID: 2100000, guid: d24105eb272b73c4bb223ba074953b21, type: 2}
+    uiMaterial: {fileID: 2100000, guid: c569fdeb9f9ad404cb744941395c6e1b, type: 2}

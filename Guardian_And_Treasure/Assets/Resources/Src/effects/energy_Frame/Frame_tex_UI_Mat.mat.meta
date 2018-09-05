@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 89af6f77f6751a74eabc901315a4923d
+timeCreated: 1530003591
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: src/effects/energy_frame/frame_tex_ui_mat
+  assetBundleVariant: mat

@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 6ff445900119f8b498346b3f9fa55ee8
+timeCreated: 1528789890
+licenseType: Pro
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: src/effects/skill_heal/skill_heal_tex
+  assetBundleVariant: json

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a64e5b0e436d4bed9780211ae245f7b, type: 3}
+  m_Name: Skill_Heal_Data
+  m_EditorClassIdentifier: 
+  dataName: Skill_Heal
+  dragonBonesJSON: {fileID: 4900000, guid: 07dadd1e42ca19d4bb77f91f935cde17, type: 3}
+  textureAtlas:
+  - textureAtlasJSON: {fileID: 4900000, guid: 6ff445900119f8b498346b3f9fa55ee8, type: 3}
+    texture: {fileID: 2800000, guid: 77af65e272aeb7148b10a07108f6bf84, type: 3}
+    material: {fileID: 2100000, guid: 1c6973344981d0047b1288add095322e, type: 2}
+    uiMaterial: {fileID: 2100000, guid: 0a43917cd5d87074898728abe1c53fae, type: 2}
