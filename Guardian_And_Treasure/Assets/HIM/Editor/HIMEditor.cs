@@ -30,6 +30,13 @@ public class HIMEditor
         win.Initialization();
         Show(win);
     }
+    [MenuItem("游戏设计器/测试工具")]
+    public static void Tool3()
+    {
+        HIMAssetBundleWindow win = EditorWindow.GetWindow<HIMAssetBundleWindow>("测试工具");
+        win.Initialization();
+        Show(win);
+    }
     static void Show(EditorWindow target)
     {
         if (Current != null && !Current.Equals(target))

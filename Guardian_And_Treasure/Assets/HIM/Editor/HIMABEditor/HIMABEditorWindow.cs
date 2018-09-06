@@ -15,6 +15,7 @@ using UnityEngine;
 public class HIMABEditorWindow : EditorWindow
 {
     List<AssetInfo> assetCollection = new List<AssetInfo>();
+    List<BundleInfo> bundleCollection = new List<BundleInfo>();
     public string ImportFolder = "";
     public string ExportFolder = "";
     public bool viewDetail = false;
@@ -38,8 +39,10 @@ public class HIMABEditorWindow : EditorWindow
     };
 
     Vector2 scrollPosition = Vector2.zero;
+    public string[] AllBundleNames;
     public void Initialization()
     {
+        AllBundleNames = AssetDatabase.GetAllAssetBundleNames();
         ImportFolder = HIMEditorUtility.ImportPath;
         ExportFolder = Path.Combine(HIMEditorUtility.ExportPath, HIMEditorUtility.BuildType.ToString());
     }
@@ -59,7 +62,6 @@ public class HIMABEditorWindow : EditorWindow
         bool searchBegin = GUILayout.Button("开始搜索");
         if (searchBegin)
         {
-
             assetCollection.Clear();
             this.Search();
             this.Filter();
@@ -70,6 +72,14 @@ public class HIMABEditorWindow : EditorWindow
                 importer.SetAssetBundleNameAndVariant(info.srcDirectory, info.variant);
             }
         }
+
+        //GUILayout.BeginVertical();
+        //for (int i = 0; i < AllBundleNames.Length; i++)
+        //{
+        //    EditorGUILayout.LabelField(AllBundleNames[i], GUILayout.ExpandWidth(true));
+        //}
+        //GUILayout.EndVertical();
+
         if (assetCollection.Count > 0)
         {
             this.ViewFileDetail();
@@ -171,7 +181,6 @@ public class HIMABEditorWindow : EditorWindow
 
         if (beginPackage)
         {
-
             if (!Directory.Exists(ExportFolder)) { Directory.CreateDirectory(ExportFolder); }
             ExportFolder = ExportFolder.ToLower();
             BuildPipeline.BuildAssetBundles(ExportFolder, BuildAssetBundleOptions.UncompressedAssetBundle, HIMEditorUtility.BuildType);
@@ -202,10 +211,4 @@ public class AssetInfo
     public string extension;
     public string variant;
 }
-public class PkgInfo
-{
-    public string name;
-    public string extension;
-    public string md5;
-    public long size;
-}
+
