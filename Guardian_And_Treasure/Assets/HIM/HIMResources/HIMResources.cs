@@ -31,7 +31,7 @@ public class HIMResources : SingleMono<HIMResources>
             return mainBundle != null && zeroBundle != null;
         }
     }
-    public void Online()
+    public override void Online()
     {
         this.Log("读取 main 包");
         //加载AB信息，包含依赖和索引信息
@@ -65,7 +65,10 @@ public class HIMResources : SingleMono<HIMResources>
             Entries.Add(key, value);
         }
     }
-
+    public override void Offline()
+    {
+        
+    }
     /// <summary>
     /// 获取bundle
     /// </summary>

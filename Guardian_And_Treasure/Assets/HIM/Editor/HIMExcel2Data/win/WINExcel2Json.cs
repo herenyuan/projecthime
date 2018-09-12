@@ -33,7 +33,6 @@ public class WINExcelToJson : EditorWindow
     public string SaveKey = "SavedPath";
     public string[] fullNames;
     public List<string> TotalPath;
-    public HIMSoResource src;
 
     public void Initialization()
     {

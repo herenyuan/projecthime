@@ -25,7 +25,7 @@ public class HIMAudioManager : SingleMono<HIMAudioManager> {
     /// <summary>
     /// 模块初始化
     /// </summary>
-    public void Online()
+    public override void Online()
     {
         gameObject.AddComponent<AudioListener>();
         for (int i = 0; i < Preload; i++)
@@ -37,6 +37,10 @@ public class HIMAudioManager : SingleMono<HIMAudioManager> {
             HIMAudios.Add(ins);
         }
         this.PreloadSrc();
+    }
+    public override void Offline()
+    {
+        
     }
     private void PreloadSrc()
     {

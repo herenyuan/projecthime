@@ -1,12 +1,8 @@
 ﻿using proto.cmd;
 using ProtoBuf;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -16,26 +12,24 @@ using UnityEngine;
 /// </summary>
 public class HIMNetwork : SingleMono<HIMNetwork>
 {
+
     private Dictionary<string, HIMSocket> mSocketDic = new Dictionary<string, HIMSocket>();
     private List<HIMSocket> mSocketList = new List<HIMSocket>();
-    /// <summary>
-    /// 连接结果回调
-    /// </summary>
-    public Dictionary<string, Action<HIMSocket.Result>> ResultCallBack = new Dictionary<string, Action<HIMSocket.Result>>();
-    /// <summary>
-    /// 连接错误回调
-    /// </summary>
-    public Dictionary<string, Action<HIMSocket.Result>> ErrorCallBack = new Dictionary<string, Action<HIMSocket.Result>>();
     private Dictionary<int, Action<Msg>> mCallBack = new Dictionary<int, Action<Msg>>();
 
-
+    public Action<bool> onSendMsgCallBack;
+    public Action onSendMsgOkCallBack;
     public Action<string> onExceptionCallBack;
 
-    public void Online()
+    public Action onSendMessage;
+    public Action onEmptyQueue;
+
+    public override void Online()
     {
         Debug.Log("网络模块初始化");
+
     }
-    public void Offline()
+    public override void Offline()
     {
         mSocketDic.Clear();
         for (int i = 0; i < mSocketList.Count; i++)
@@ -45,7 +39,7 @@ public class HIMNetwork : SingleMono<HIMNetwork>
         mSocketList.Clear();
     }
 
-    public void Create(HIMConnection _Connection)
+    public void Create(HIMHost _Connection)
     {
         //创建连接对象
         if (!mSocketDic.ContainsKey(_Connection.FullName))
@@ -53,26 +47,35 @@ public class HIMNetwork : SingleMono<HIMNetwork>
             GameObject GO = new GameObject(string.Format("[{0}]", _Connection.FullName));
             GO.transform.SetParent(transform);
             HIMSocket socket = GO.AddComponent<HIMSocket>();
-            socket.Set(_Connection.Host, _Connection.Port);
-            socket.onConnectCallBack = OnConnectCallBack;
-            socket.onExceptionCallBack = OnExceptionCallBack;
+            socket.Set(_Connection.IP, _Connection.Port);
+            socket.onResultCallBack = OnResultCallBack;
+            socket.onLogCallBack = OnLogCallBack;
             socket.onReceiveMsgCallBack = OnReceiveMsgCallBack;
-            socket.onCloseCallBack = null;
             mSocketDic.Add(_Connection.FullName, socket);
         }
     }
     void OnConnectCallBack(HIMSocket.Result result)
     {
-        Debug.Log(string.Format("<color=#00ff00>[{0}]</color> is {1}...", result.Host, result.Message));
+        HIMDebug.Ins.Log(result.ToString());
     }
-    void OnExceptionCallBack(HIMSocket.Result result)
+    void OnResultCallBack(HIMSocket.Result result)
     {
-        Debug.Log(string.Format("<color=#00ff00>[{0}]</color> is {1}...", result.Host, result.Message));
+        switch (result.Code)
+        {
+            case SocketCode.error:
+                if (onExceptionCallBack != null) { onExceptionCallBack.Invoke(result.ToString()); }
+                break;
+            default:
+                HIMDebug.Ins.Log(result.ToString());
+                break;
+        }
+
     }
-    void OnCloseCallBack(HIMSocket.Result result)
+    void OnLogCallBack(string log)
     {
-        Debug.Log(string.Format("<color=#00ff00>[{0}]</color> is {1}...", result.Host, result.Message));
+        HIMDebug.Ins.Log(log);
     }
+
     void OnReceiveMsgCallBack(List<Msg> msgs)
     {
         for (int i = 0; i < msgs.Count; i++)
@@ -81,6 +84,7 @@ public class HIMNetwork : SingleMono<HIMNetwork>
             if (mCallBack.ContainsKey(data.cmd))
             {
                 mCallBack[data.cmd].Invoke(data);
+                if (onSendMsgOkCallBack != null) { onSendMsgOkCallBack.Invoke(); }
             }
             else
             {
@@ -116,7 +120,7 @@ public class HIMNetwork : SingleMono<HIMNetwork>
         return Serializer.Deserialize<T>(stream);
     }
 
-    public void Send<T>(HIMConnection _Connection, EchoCmd cmd, T target)
+    public void Send<T>(HIMHost _Connection, EchoCmd cmd, T target, bool visible = true)
     {
         if (_Connection == null)
         {
@@ -130,10 +134,11 @@ public class HIMNetwork : SingleMono<HIMNetwork>
         if (ins != null)
         {
             ins.Send(new Msg((int)cmd, stream.ToArray()));
+            if (onSendMsgCallBack != null) { onSendMsgCallBack.Invoke(visible); }
         }
         else
         {
-            Debug.Log(string.Format("<color=#00ff00>{0}</color> connection not exist...", _Connection.Host));
+            Debug.Log(string.Format("<color=#00ff00>{0}</color> connection not exist...", _Connection.IP));
         }
     }
     /// <summary>
@@ -141,7 +146,7 @@ public class HIMNetwork : SingleMono<HIMNetwork>
     /// </summary>
     /// <param name="way"></param>
     /// <param name="cmd"></param>
-    public void Send(HIMConnection _Connection, EchoCmd cmd)
+    public void Send(HIMHost _Connection, EchoCmd cmd, bool visible = true)
     {
         if (_Connection == null)
         {
@@ -153,16 +158,24 @@ public class HIMNetwork : SingleMono<HIMNetwork>
         if (ins != null)
         {
             ins.Send(new Msg((int)cmd, new byte[0]));
+            if (onSendMsgCallBack != null) { onSendMsgCallBack.Invoke(visible); }
         }
         else
         {
-            Debug.Log(string.Format("<color=#00ff00>{0}</color> connection not exist...", _Connection.Host));
+            Debug.Log(string.Format("<color=#00ff00>{0}</color> connection not exist...", _Connection.IP));
         }
     }
     public void Close()
     {
+        mCallBack.Clear();
+        for (int i = 0; i < mSocketList.Count; i++)
+        {
+            mSocketList[i].Close();
+        }
+        mSocketList.Clear();
+        mSocketDic.Clear();
 
     }
-
 }
+
 

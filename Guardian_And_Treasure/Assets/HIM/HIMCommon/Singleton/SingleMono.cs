@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleMono<T> : MonoBehaviour where T : Component, new()
+public abstract class SingleMono<T> : MonoBehaviour where T : Component, new()
 {
     static T single;
     public static T Ins
@@ -21,4 +21,6 @@ public class SingleMono<T> : MonoBehaviour where T : Component, new()
         }
         return single;
     }
+    public abstract void Online();
+    public abstract void Offline();
 }

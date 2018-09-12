@@ -29,6 +29,10 @@ public class HIMSocket : MonoBehaviour
             Code = _Code;
             Message = _Message;
         }
+        public override string ToString()
+        {
+            return string.Format("<color=#00ff00>[{0}]</color> ----> {1}...", Host, Message);
+        }
     }
     private string host = "127.0.0.1";
     private int port = 9000;
@@ -42,13 +46,15 @@ public class HIMSocket : MonoBehaviour
     public bool Activition { get { return mSocket != null && mSocket.Connected; } }
     private Socket mSocket;
 
-    public Action<Result> onConnectCallBack;
-    public Action<Result> onExceptionCallBack;
-    public Action<Result> onCloseCallBack;
+    public Action<Result> onResultCallBack;
     public Action<List<Msg>> onReceiveMsgCallBack;
+    public Action<string> onLogCallBack;
 
     public Queue<Msg> SendQueue;
     public Queue<List<Msg>> ReceiveQueue;
+
+    public Queue<Result> ResultQueue;
+    public Queue<string> LogQueue;
     public Msg CurrentSendMsg;
     private Thread mWorkThread;
 
@@ -66,13 +72,15 @@ public class HIMSocket : MonoBehaviour
     {
         //创建连接对象
         //判断 Host
-        if (string.IsNullOrEmpty(_host)) { if (onExceptionCallBack != null) { onExceptionCallBack.Invoke(new Result(host, SocketCode.error, "Host is not correct...")); return; } }
+        if (string.IsNullOrEmpty(_host)) { this.PushResult(new Result(host, SocketCode.error, "Host is not correct...")); }
         //判断 Port
-        if (_port <= 0) { if (onExceptionCallBack != null) { onExceptionCallBack.Invoke(new Result(host, SocketCode.error, "Port is not correct...")); return; } }
+        if (_port <= 0) { this.PushResult(new Result(host, SocketCode.error, "Port is not correct...")); }
         Host = _host;
         Port = _port;
         SendQueue = new Queue<Msg>();
         ReceiveQueue = new Queue<List<Msg>>();
+        ResultQueue = new Queue<Result>();
+        LogQueue = new Queue<string>();
         if (IPAddress.TryParse(host, out mAddress))
         {
             //IP地址格式
@@ -90,11 +98,23 @@ public class HIMSocket : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
+        if (LogQueue.Count > 0)
+        {
+            if (onLogCallBack != null) { onLogCallBack.Invoke(LogQueue.Dequeue()); }
+        }
+        if (ResultQueue.Count > 0)
+        {
+            //发生异常
+            Result result = ResultQueue.Dequeue();
+            if (onResultCallBack != null) { onResultCallBack.Invoke(result); }
+        }
+
         if (ReceiveQueue.Count > 0)
         {
             List<Msg> msgs = ReceiveQueue.Dequeue();
             if (onReceiveMsgCallBack != null) { onReceiveMsgCallBack.Invoke(msgs); }
         }
+
     }
     public void Connect()
     {
@@ -116,8 +136,7 @@ public class HIMSocket : MonoBehaviour
     }
     public void Set(Action<Result> _onConnectResultCallBack, Action<Result> _onExceptionCallBack)
     {
-        onConnectCallBack = _onConnectResultCallBack;
-        onExceptionCallBack = _onExceptionCallBack;
+
     }
     /// <summary>
     /// 异步连接开始
@@ -132,18 +151,18 @@ public class HIMSocket : MonoBehaviour
             {
                 mWorkThread = new Thread(SocketWork);
                 mWorkThread.Start(); //启动工作线程
-                Debug.Log(string.Format("<color=#00ff00>[{0}]</color> connect complete...", Host));
-                if (onConnectCallBack != null) { onConnectCallBack.Invoke(new Result(host, SocketCode.success, "connect success...")); }
+                string.Format(string.Format("<color=#00ff00>[{0}]</color> connect complete...", Host));
+                this.PushResult(new Result(host, SocketCode.success, "connect success..."));
             }
             else
             {
-                if (onExceptionCallBack != null) { onExceptionCallBack.Invoke(new Result(host, SocketCode.error, "connect faild...")); }
+                this.PushResult(new Result(host, SocketCode.error, "connect faild..."));
             }
         }
         catch (Exception ex)
         {
             //连接后的异常
-            if (onExceptionCallBack != null) { onExceptionCallBack.Invoke(new Result(host, SocketCode.error, ex.Message)); }
+            this.PushResult(new Result(host, SocketCode.error, ex.Message));
         }
     }
     /// <summary>
@@ -158,7 +177,7 @@ public class HIMSocket : MonoBehaviour
             Thread.Sleep(100);
         }
         this.Close();
-        if (onCloseCallBack != null) { onCloseCallBack.Invoke(new Result(host, SocketCode.close, "connection closed")); }
+        this.PushResult(new Result(host, SocketCode.close, "connection closed"));
     }
     public void Send(Msg msg)
     {
@@ -174,7 +193,7 @@ public class HIMSocket : MonoBehaviour
             if (CurrentSendMsg == null) { CurrentSendMsg = SendQueue.Dequeue(); }//发送完成才能继续下一条
             if (CurrentSendMsg != null && CurrentSendMsg.Valid)
             {
-                Debug.Log(string.Format("send  <color=#ff0000>[{0}]</color> -----------------------> <color=#00ff00>[{1}]</color>", CurrentSendMsg.cmd, host));
+                this.PushLog(string.Format("send  <color=#ff0000>[{0}]</color> -----------------------> <color=#00ff00>[{1}]</color>", CurrentSendMsg.cmd, host));
                 byte[] buffer = this.Encode(CurrentSendMsg);
                 this.mSocket.Send(buffer, 0, buffer.Length, SocketFlags.None);//阻塞发送
                 CurrentSendMsg = null;
@@ -183,7 +202,7 @@ public class HIMSocket : MonoBehaviour
         catch (Exception ex)
         {
             //发送时出现异常
-            if (onExceptionCallBack != null) { onExceptionCallBack.Invoke(new Result(host, SocketCode.error, ex.Message)); }
+            this.PushResult(new Result(host, SocketCode.error, ex.Message));
         }
     }
 
@@ -207,7 +226,7 @@ public class HIMSocket : MonoBehaviour
                     if (ReceivedBytes.Count < MaxSize)
                     {
                         //剩余消息体不够完整等待中，需要进行分包和粘包
-                        Debug.Log("-------------------------------------------->出现分包情况");
+                        this.PushLog("-------------------------------------------->出现分包情况");
                     }
                     else
                     {
@@ -232,13 +251,22 @@ public class HIMSocket : MonoBehaviour
             catch (Exception ex)
             {
                 //接收时出现异常
-                if (onExceptionCallBack != null) { onExceptionCallBack.Invoke(new Result(host, SocketCode.error, ex.Message)); }
+                this.PushResult(new Result(host, SocketCode.error, ex.Message));
             }
         }
     }
+
+    void PushResult(Result result)
+    {
+        ResultQueue.Enqueue(result);
+    }
+    void PushLog(string log)
+    {
+        LogQueue.Enqueue(log);
+    }
     public void Close()
     {
-        Debug.Log(string.Format("[{0}] close...", host));
+        this.PushLog(string.Format("[{0}] close...", host));
         if (mSocket.Connected) { mSocket.Disconnect(true); }
         mSocket = null;
     }
