@@ -12,8 +12,6 @@ public class Main : MonoBehaviour {
         HIMResources.Ins.Online();
         HIMHostManager.Ins.Online();
         HIMNetwork.Ins.Online();
-        HIMResources.Ins.Online();
         HIMScenes.Ins.Online();
-
     }
 }
