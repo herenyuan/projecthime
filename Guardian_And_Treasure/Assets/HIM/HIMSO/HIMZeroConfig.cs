@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Zero 配置
 /// 在 Resources 根目录中
+/// (有待修改)
 /// </summary>
 public class HIMZeroConfig : ScriptableObject {
 
