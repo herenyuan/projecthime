@@ -190,5 +190,10 @@ public class HIMResources : SingleMono<HIMResources>
         //完成 bundleName 的组装
         return ins;
     }
+    public void UnLoad(UnityEngine.Object srcTarget)
+    {
+        Resources.UnloadAsset(srcTarget);//无法卸载 Public 绑定的资源
+        Resources.UnloadUnusedAssets(); //没有引用才能正常卸载
+    }
 }
 
