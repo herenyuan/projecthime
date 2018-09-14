@@ -17,13 +17,13 @@ public class RenderCollection : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            this.Load();
+            this.TextureLoad();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            this.Unload();
+            this.TextureUnload();
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -33,6 +33,19 @@ public class RenderCollection : MonoBehaviour
         {
             this.ReloadScene3();
         }
+    }
+    Texture[] texs;
+    public void TextureLoad()
+    {
+        texs = Resources.LoadAll<Texture>("Texture");
+    }
+    public void TextureUnload()
+    {
+        for (int i = 0; i < texs.Length; i++)
+        {
+            Resources.UnloadAsset(texs[i]);
+        }
+        Resources.UnloadUnusedAssets();
     }
     public void Load()
     {
@@ -46,23 +59,25 @@ public class RenderCollection : MonoBehaviour
     }
     public void Unload()
     {
-        for(int i = 0;i< formation.transform.childCount;i++)
+        for (int i = 0; i < formation.transform.childCount; i++)
         {
             GameObject temp = formation.transform.GetChild(i).gameObject;
             GameObject.Destroy(temp);
         }
-      
+
         Resources.UnloadUnusedAssets();
     }
-    
+
     public void ReloadScene2()
     {
         SceneManager.LoadScene("Test2");
         Resources.UnloadUnusedAssets();
+        System.GC.Collect(1);
     }
     public void ReloadScene3()
     {
         SceneManager.LoadScene("Test3");
         Resources.UnloadUnusedAssets();
+        System.GC.Collect(1);
     }
 }

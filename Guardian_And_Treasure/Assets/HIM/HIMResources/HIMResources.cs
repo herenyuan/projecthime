@@ -11,8 +11,6 @@ using UnityEngine;
 /// </summary>
 public class HIMResources : SingleMono<HIMResources>
 {
-    public readonly string abResources = "ABResources";
-    public readonly string zeroConfig = "zero.asset";
     public readonly string manifestName = "AssetBundleManifest";
     public Action<string> onMessageCallBack;
     public Action<string> onErrorCallBack;
@@ -33,14 +31,6 @@ public class HIMResources : SingleMono<HIMResources>
     }
     public override void Online()
     {
-        this.Log("读取 main 包");
-        //加载AB信息，包含依赖和索引信息
-        mainBundle = this.GetBundle(HIMPath.Src, HIMPlatform.Current);
-        this.Log("读取 zero 包");
-        //加载0号配置
-        zeroBundle = this.GetBundle(HIMPath.Src, zeroConfig);
-        if (mainBundle == null) { return; }
-        this.Log("创建依赖关系");
         Manifest = mainBundle.LoadAsset<AssetBundleManifest>(manifestName);
         string[] bundleNames = Manifest.GetAllAssetBundles();//获取所有的包名
 
